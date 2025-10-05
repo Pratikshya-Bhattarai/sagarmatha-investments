@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sagarmatha-investments.vercel.app/sitemap.xml
