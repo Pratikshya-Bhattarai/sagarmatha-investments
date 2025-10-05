@@ -1,186 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagarmatha Investments</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #0a192f, #1e3a8a);
-            color: #e5e7eb;
-            overflow-x: hidden;
-        }
-        header {
-            background: linear-gradient(90deg, #1e40af, #3b82f6);
-            color: white;
-            padding: 2em;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        header h1 {
-            font-size: 2.5em;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        nav {
-            background: rgba(17, 24, 39, 0.9);
-            padding: 1em;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-        nav a {
-            color: #93c5fd;
-            margin: 0 1.5em;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        nav a:hover {
-            color: #60a5fa;
-            text-decoration: underline;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2em;
-        }
-        .section {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2em;
-            margin-bottom: 2em;
-            border-radius: 12px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        .section:hover {
-            transform: translateY(-5px);
-        }
-        h2 {
-            color: #60a5fa;
-            font-size: 1.8em;
-            margin-bottom: 1em;
-            text-transform: uppercase;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            margin: 0.8em 0;
-            padding-left: 1.5em;
-            position: relative;
-            font-size: 1.1em;
-        }
-        ul li:before {
-            content: '🌟';
-            position: absolute;
-            left: 0;
-            color: #f59e0b;
-        }
-        footer {
-            background: linear-gradient(90deg, #1e40af, #3b82f6);
-            color: white;
-            text-align: center;
-            padding: 1.5em;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .highlight {
-            color: #f59e0b;
-            font-weight: bold;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .section {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sagarmatha Investments — Brokerage & Investment Advisory in Nepal</title>
+  <meta name="description" content="Sagarmatha Investments offers stock brokerage, portfolio management, and investment advisory services in Nepal. Transparent, reliable, client-focused.">
+  <link rel="canonical" href="https://sagarmatha-investments.vercel.app/">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <meta name="theme-color" content="#0a192f" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preload" as="image" href="/images/office.png" imagesrcset="/images/office.png 1x" fetchpriority="high">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sagarmatha Investments">
+  <meta property="og:description" content="Brokerage, PMS, IPO handling, research, and advisory.">
+  <meta property="og:url" content="https://sagarmatha-investments.vercel.app/">
+  <meta property="og:image" content="https://sagarmatha-investments.vercel.app/images/office.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sagarmatha Investments">
+  <meta name="twitter:description" content="Trusted partner for financial success in Nepal.">
+  <meta name="twitter:image" content="https://sagarmatha-investments.vercel.app/images/office.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Sagarmatha Investments",
+    "url": "https://sagarmatha-investments.vercel.app/",
+    "logo": "https://sagarmatha-investments.vercel.app/images/office.png",
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "info@sagarmathainvestments.com",
+      "telephone": "+977-9876543211",
+      "areaServed": "NP",
+      "availableLanguage": ["en"]
+    }]
+  }
+  </script>
+
+  <style>
+    :root {
+      --background: #ffffff;
+      --foreground: #0f172a;
+      --muted: #334155;
+      --accent: #1e40af;
+      --accent-2: #3b82f6;
+      --primary: #0a192f;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --section-bg: rgba(0, 0, 0, 0.04);
+      --link: #1d4ed8;
+      --link-hover: #60a5fa;
+      --focus-ring-color: #f59e0b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #0a192f;
+        --foreground: #e5e7eb;
+        --muted: #93c5fd;
+        --accent: #1e40af;
+        --accent-2: #3b82f6;
+        --primary: #0a192f;
+        --text: #e5e7eb;
+        --text-muted: #cbd5e1;
+        --section-bg: rgba(255, 255, 255, 0.08);
+        --link: #93c5fd;
+        --link-hover: #bfdbfe;
+      }
+    }
+    html[data-theme="light"] { color-scheme: light; }
+    html[data-theme="dark"] { color-scheme: dark; }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      margin: 0;
+      background: linear-gradient(135deg, var(--background), var(--accent));
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    .skip-link {
+      position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+    }
+    .skip-link:focus { position: static; width: auto; height: auto; padding: .5rem 1rem; background: var(--accent-2); color: #fff; z-index: 1000; }
+
+    header {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    header h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin: 0; letter-spacing: .04em; text-transform: uppercase; }
+    header p { margin-top: .5rem; opacity: .9; }
+
+    nav[aria-label] {
+      background: rgba(17, 24, 39, 0.9);
+      padding: .75rem 1rem;
+      position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px);
+      display: flex; gap: 1rem; align-items: center; justify-content: center;
+    }
+    nav a {
+      color: var(--link);
+      text-decoration: none; font-weight: 600;
+      padding: .25rem .5rem; border-radius: .375rem;
+    }
+    nav a:hover, nav a:focus-visible { color: var(--link-hover); text-decoration: underline; outline: none; }
+    nav .spacer { flex: 1; }
+    #theme-toggle {
+      margin-left: auto;
+      background: transparent; border: 1px solid rgba(255,255,255,.3);
+      color: #fff; padding: .4rem .6rem; border-radius: .5rem; cursor: pointer;
+    }
+    #theme-toggle:focus-visible { outline: 2px solid var(--focus-ring-color); outline-offset: 2px; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+    section.section {
+      background: var(--section-bg);
+      padding: 2rem; margin-bottom: 2rem; border-radius: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    section.section:hover { transform: translateY(-5px); }
+    h2 { color: #60a5fa; font-size: clamp(1.3rem, 2.5vw, 1.8rem); margin-bottom: 1rem; text-transform: uppercase; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    ul li { margin: .8em 0; padding-left: 1.5em; position: relative; font-size: 1.05em; line-height: 1.5; }
+    ul li::before { content: '🌟'; position: absolute; left: 0; }
+    .highlight { color: #f59e0b; font-weight: bold; }
+
+    figure { margin: 1rem 0 0; }
+    figure img { max-width: 100%; height: auto; border-radius: 8px; display: block; }
+    figcaption { font-size: .9rem; color: var(--text-muted); margin-top: .25rem; }
+
+    footer {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white; text-align: center; padding: 1.5rem; width: 100%;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    :focus-visible { outline: 2px solid var(--focus-ring-color); outline-offset: 2px; }
+
+    #loadingBar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+      background: linear-gradient(90deg, #f59e0b, #60a5fa);
+      transform-origin: left; transform: scaleX(0); transition: transform .6s ease;
+      z-index: 2000;
+    }
+
+    #scrollTopBtn {
+      position: fixed; bottom: 1rem; right: 1rem; opacity: 0; pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      transform: translateY(10px);
+      background: #1f2937; color: #fff; border: none; border-radius: 999px; padding: .6rem .8rem; cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,.3);
+    }
+    #scrollTopBtn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+    #consent {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(17,24,39,.95); color: #fff; padding: 1rem; display: none; z-index: 1500;
+      box-shadow: 0 -6px 16px rgba(0,0,0,.2);
+    }
+    #consent .actions { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .5rem; }
+    #consent button { background: #10b981; color: #fff; border: none; padding: .5rem .75rem; border-radius: .375rem; cursor: pointer; }
+    #consent button.secondary { background: #6b7280; }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Sagarmatha Investments</h1>
-        <p>Your Trusted Partner for Financial Success</p>
-    </header>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#additional-services">Additional Services</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
-    </nav>
-    <div class="container">
-        <div class="section" id="about">
-            <h2>About Sagarmatha Investments</h2>
-            <p>Sagarmatha Investments is a professional stock brokerage and investment advisory firm dedicated to helping clients achieve financial growth and security. Inspired by the strength and stability of Mount Everest, we combine deep market expertise with modern trading technology to provide <span class="highlight">transparent, reliable, and client-focused financial solutions</span>.</p>
-            <p>We specialize in:</p>
-            <ul>
-                <li>Stock Brokerage Services – Seamless buying and selling of shares.</li>
-                <li>Investment Advisory – Expert guidance for short-term and long-term wealth creation.</li>
-                <li>Portfolio Management – Tailored strategies to balance risk and growth.</li>
-                <li>Market Research – Data-driven insights to support smart investment decisions.</li>
-            </ul>
-        </div>
-        <div class="section" id="services">
-            <h2>Our Services</h2>
-            <ul>
-                <li><strong>Stock Trading (Equity Delivery & Intraday):</strong> Buying & selling company shares on NEPSE or other markets. Intraday trading for quick profits or long-term delivery trades.</li>
-                <li><strong>IPO / FPO Application Handling:</strong> Easy online application for Initial Public Offerings and Further Public Offerings. Support with ASBA & CDSC accounts.</li>
-                <li><strong>Portfolio Management Services (PMS):</strong> Expert-managed investment portfolio based on risk appetite. Diversification across stocks, mutual funds, bonds.</li>
-                <li><strong>Mutual Funds & Bonds Trading:</strong> Access to government bonds, debentures, and mutual funds.</li>
-                <li><strong>Research & Advisory:</strong> Market insights, stock analysis, buy/sell recommendations.</li>
-                <li><strong>Online Trading Platforms:</strong> Mobile & web apps for trading convenience with real-time market data & charts.</li>
-                <li><strong>Demat & MeroShare Support:</strong> Demat account opening & management. Assistance with share transfers, pledging, or dematerialization.</li>
-            </ul>
-        </div>
-        <div class="section" id="additional-services">
-            <h2>Additional Services</h2>
-            <ul>
-                <li><strong>Investor Education & Training:</strong> Free/paid workshops, online tutorials, and step-by-step guides for beginners.</li>
-                <li><strong>Customer Support Enhancements:</strong> Dedicated Relationship Managers, 24/7 helpline, WhatsApp support, and chatbot integration.</li>
-                <li><strong>Digital Tools & Insights:</strong> Smart trading app with real-time NEPSE data, stock screeners, alerts, and AI-driven advisory.</li>
-                <li><strong>Financial Products Beyond Stocks:</strong> Mutual funds, ETFs, debentures, government bonds, and insurance brokerage.</li>
-                <li><strong>Premium / VIP Services:</strong> Portfolio Management, wealth advisory, and corporate investment solutions.</li>
-                <li><strong>Value-Added Perks:</strong> Referral bonuses, loyalty rewards, festival offers, and free IPO alerts with auto-application.</li>
-                <li><strong>Sagarmatha Customer-Centric Features:</strong> Smart Trading App, daily market reports, Investor Academy, dedicated advisors, diversified options, and loyalty benefits.</li>
-            </ul>
-        </div>
-        <div class="section" id="pricing">
-            <h2>Pricing & Fees</h2>
-            <ul>
-                <li><strong>Brokerage Commission:</strong> 0.27% – 0.40% (based on transaction volume)</li>
-                <li><strong>Account Setup:</strong> Rs. 100 one-time + Rs. 100 yearly maintenance</li>
-                <li><strong>Trading Platform:</strong> Free mobile & web access</li>
-                <li><strong>Advisory & Research:</strong> Free daily updates + premium research packages</li>
-            </ul>
-            <p><em>Brokerage fees as per SEBON rules:</em></p>
-            <ul>
-                <li>Up to Rs. 50,000 → 0.40% commission</li>
-                <li>Rs. 50,001 – 500,000 → 0.37% commission</li>
-                <li>Rs. 500,001 – 2,000,000 → 0.34% commission</li>
-                <li>Rs. 2,000,001 – 10,000,000 → 0.30% commission</li>
-                <li>Above Rs. 10 million → 0.27% commission</li>
-            </ul>
-        </div>
-        <div class="section" id="contact">
-            <h2>Contact Us</h2>
-            <p>Email: info@sagarmathainvestments.com</p>
-            <p>Phone: +977-9876543211</p>
-            <p>Address: Kathmandu, Nepal</p>
-        </div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div id="loadingBar" role="progressbar" aria-label="Page loading"></div>
+
+  <header>
+    <h1>Sagarmatha Investments</h1>
+    <p>Your Trusted Partner for Financial Success</p>
+  </header>
+
+  <nav aria-label="Primary">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#additional-services">Additional Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+    <span class="spacer"></span>
+    <button id="theme-toggle" aria-pressed="false" aria-label="Toggle color theme">🌙</button>
+  </nav>
+
+  <main id="main" class="container" role="main">
+    <section class="section" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About Sagarmatha Investments</h2>
+      <p>Sagarmatha Investments is a professional stock brokerage and investment advisory firm dedicated to helping clients achieve financial growth and security. Inspired by the strength and stability of Mount Everest, we combine deep market expertise with modern trading technology to provide <span class="highlight">transparent, reliable, and client-focused financial solutions</span>.</p>
+      <p>We specialize in:</p>
+      <ul>
+        <li>Stock Brokerage Services – Seamless buying and selling of shares.</li>
+        <li>Investment Advisory – Expert guidance for short-term and long-term wealth creation.</li>
+        <li>Portfolio Management – Tailored strategies to balance risk and growth.</li>
+        <li>Market Research – Data-driven insights to support smart investment decisions.</li>
+      </ul>
+      <figure>
+        <img src="/images/office.png" alt="Sagarmatha Investments office and team" width="1200" height="675" loading="lazy" decoding="async">
+        <figcaption>Experienced team backed by modern trading tools</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="services" aria-labelledby="services-title">
+      <h2 id="services-title">Our Services</h2>
+      <ul>
+        <li><strong>Stock Trading (Equity Delivery & Intraday):</strong> Buying & selling company shares on NEPSE or other markets. Intraday trading for quick profits or long-term delivery trades.</li>
+        <li><strong>IPO / FPO Application Handling:</strong> Easy online application for Initial Public Offerings and Further Public Offerings. Support with ASBA & CDSC accounts.</li>
+        <li><strong>Portfolio Management Services (PMS):</strong> Expert-managed investment portfolio based on risk appetite. Diversification across stocks, mutual funds, bonds.</li>
+        <li><strong>Mutual Funds & Bonds Trading:</strong> Access to government bonds, debentures, and mutual funds.</li>
+        <li><strong>Research & Advisory:</strong> Market insights, stock analysis, buy/sell recommendations.</li>
+        <li><strong>Online Trading Platforms:</strong> Mobile & web apps for trading convenience with real-time market data & charts.</li>
+        <li><strong>Demat & MeroShare Support:</strong> Demat account opening & management. Assistance with share transfers, pledging, or dematerialization.</li>
+      </ul>
+      <figure>
+        <img src="/images/services.png" alt="Overview of trading and advisory services" width="1200" height="675" loading="lazy" decoding="async">
+        <figcaption>Full-service brokerage and advisory</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="additional-services" aria-labelledby="additional-title">
+      <h2 id="additional-title">Additional Services</h2>
+      <ul>
+        <li><strong>Investor Education & Training:</strong> Free/paid workshops, online tutorials, and step-by-step guides for beginners.</li>
+        <li><strong>Customer Support Enhancements:</strong> Dedicated Relationship Managers, 24/7 helpline, WhatsApp support, and chatbot integration.</li>
+        <li><strong>Digital Tools & Insights:</strong> Smart trading app with real-time NEPSE data, stock screeners, alerts, and AI-driven advisory.</li>
+        <li><strong>Financial Products Beyond Stocks:</strong> Mutual funds, ETFs, debentures, government bonds, and insurance brokerage.</li>
+        <li><strong>Premium / VIP Services:</strong> Portfolio Management, wealth advisory, and corporate investment solutions.</li>
+        <li><strong>Value-Added Perks:</strong> Referral bonuses, loyalty rewards, festival offers, and free IPO alerts with auto-application.</li>
+        <li><strong>Sagarmatha Customer-Centric Features:</strong> Smart Trading App, daily market reports, Investor Academy, dedicated advisors, diversified options, and loyalty benefits.</li>
+      </ul>
+      <figure>
+        <img src="/images/benifits.png" alt="Investor education and value-added benefits" width="1200" height="675" loading="lazy" decoding="async">
+        <figcaption>Value-packed services for every investor</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="pricing" aria-labelledby="pricing-title">
+      <h2 id="pricing-title">Pricing & Fees</h2>
+      <ul>
+        <li><strong>Brokerage Commission:</strong> 0.27% – 0.40% (based on transaction volume)</li>
+        <li><strong>Account Setup:</strong> Rs. 100 one-time + Rs. 100 yearly maintenance</li>
+        <li><strong>Trading Platform:</strong> Free mobile & web access</li>
+        <li><strong>Advisory & Research:</strong> Free daily updates + premium research packages</li>
+      </ul>
+      <p><em>Brokerage fees as per SEBON rules:</em></p>
+      <ul>
+        <li>Up to Rs. 50,000 → 0.40% commission</li>
+        <li>Rs. 50,001 – 500,000 → 0.37% commission</li>
+        <li>Rs. 500,001 – 2,000,000 → 0.34% commission</li>
+        <li>Rs. 2,000,001 – 10,000,000 → 0.30% commission</li>
+        <li>Above Rs. 10 million → 0.27% commission</li>
+      </ul>
+      <figure>
+        <img src="/images/invest.png" alt="Pricing and commission structure" width="1200" height="675" loading="lazy" decoding="async">
+        <figcaption>Transparent, regulation-aligned fees</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact Us</h2>
+      <address>
+        <p>Email: <a href="mailto:info@sagarmathainvestments.com">info@sagarmathainvestments.com</a></p>
+        <p>Phone: <a href="tel:+9779876543211">+977-9876543211</a></p>
+        <p>Address: Kathmandu, Nepal</p>
+      </address>
+    </section>
+  </main>
+
+  <button id="scrollTopBtn" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <div id="consent" role="dialog" aria-live="polite" aria-label="Privacy consent">
+    <div><strong>We use optional analytics.</strong> Allow anonymous usage to help improve the site?</div>
+    <div class="actions">
+      <button id="acceptConsent">Allow</button>
+      <button id="declineConsent" class="secondary">Decline</button>
     </div>
-    <footer>
-        <p>&copy; 2025 Sagarmatha Investments. All rights reserved.</p>
-    </footer>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sagarmatha Investments. All rights reserved.</p>
+  </footer>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const storageKey = 'theme-preference';
+      function getPreferredTheme() {
+        const stored = localStorage.getItem(storageKey);
+        if (stored === 'light' || stored === 'dark') return stored;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        const btn = document.getElementById('theme-toggle');
+        if (btn) {
+          btn.setAttribute('aria-pressed', theme === 'dark');
+          btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+      }
+      const initTheme = getPreferredTheme();
+      applyTheme(initTheme);
+      window.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('theme-toggle');
+        if (toggle) {
+          toggle.addEventListener('click', () => {
+            const next = (root.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
+            localStorage.setItem(storageKey, next);
+            applyTheme(next);
+          });
+        }
+      });
+    })();
+  </script>
+  <script>
+    (function(){
+      const bar = document.getElementById('loadingBar');
+      if (!bar) return;
+      bar.style.transform = 'scaleX(0.25)';
+      window.addEventListener('load', () => {
+        bar.style.transform = 'scaleX(1)';
+        setTimeout(() => { bar.style.display = 'none'; }, 500);
+      });
+    })();
+  </script>
+  <script>
+    (function(){
+      const btn = document.getElementById('scrollTopBtn');
+      if (!btn) return;
+      function onScroll() {
+        if (window.scrollY > 400) btn.classList.add('visible');
+        else btn.classList.remove('visible');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      onScroll();
+    })();
+  </script>
+  <script>
+    (function(){
+      const CONSENT_KEY = 'analytics-consent';
+      const GA_MEASUREMENT_ID = '';
+      const banner = document.getElementById('consent');
+      function loadGA(id) {
+        if (!id) return;
+        const s1 = document.createElement('script');
+        s1.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+        s1.async = true;
+        document.head.appendChild(s1);
+        const s2 = document.createElement('script');
+        s2.text = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','" + id + "',{anonymize_ip:true});";
+        document.head.appendChild(s2);
+      }
+      const existing = localStorage.getItem(CONSENT_KEY);
+      if (existing === 'accepted') {
+        loadGA(GA_MEASUREMENT_ID);
+      } else if (existing === null) {
+        if (banner) banner.style.display = 'block';
+        document.getElementById('acceptConsent')?.addEventListener('click', () => {
+          localStorage.setItem(CONSENT_KEY, 'accepted');
+          if (banner) banner.style.display = 'none';
+          loadGA(GA_MEASUREMENT_ID);
+        });
+        document.getElementById('declineConsent')?.addEventListener('click', () => {
+          localStorage.setItem(CONSENT_KEY, 'declined');
+          if (banner) banner.style.display = 'none';
+        });
+      }
+    })();
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
 </body>
 </html>
