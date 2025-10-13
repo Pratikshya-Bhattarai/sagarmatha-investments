@@ -4,6 +4,15 @@ import { getFallbackNEPSEData, isSupabaseConfigured } from '@/lib/nepse-data'
 
 export async function GET(request: NextRequest) {
   try {
+    console.log('NEPSE API called')
+    
+    // Always return fallback data for now to ensure it works
+    console.log('Returning fallback NEPSE data')
+    const fallbackData = getFallbackNEPSEData()
+    return NextResponse.json(fallbackData)
+
+    // TODO: Uncomment this when Supabase is properly configured
+    /*
     // Check if Supabase is configured
     if (!isSupabaseConfigured()) {
       console.log('Supabase not configured, returning fallback data')
@@ -28,6 +37,7 @@ export async function GET(request: NextRequest) {
       default:
         return NextResponse.json({ error: 'Invalid type parameter' }, { status: 400 })
     }
+    */
   } catch (error) {
     console.error('Error fetching NEPSE data:', error)
     // Return fallback data on error
