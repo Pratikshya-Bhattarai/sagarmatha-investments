@@ -60,23 +60,7 @@ export function ChartsSection() {
               View Full Data →
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-slate-50 rounded-lg p-4">
-              <div className="text-sm text-slate-600 mb-1">NEPSE Index</div>
-              <div className="text-2xl font-bold text-slate-900">2,847.23</div>
-              <div className="text-sm text-green-600">+45.67 (+1.63%)</div>
-            </div>
-            <div className="bg-slate-50 rounded-lg p-4">
-              <div className="text-sm text-slate-600 mb-1">Sensitive Index</div>
-              <div className="text-2xl font-bold text-slate-900">567.89</div>
-              <div className="text-sm text-green-600">+12.34 (+2.22%)</div>
-            </div>
-            <div className="bg-slate-50 rounded-lg p-4">
-              <div className="text-sm text-slate-600 mb-1">Float Index</div>
-              <div className="text-2xl font-bold text-slate-900">198.45</div>
-              <div className="text-sm text-red-600">-2.11 (-1.05%)</div>
-            </div>
-          </div>
+          <NEPSERealData />
         </div>
 
         {/* International Market Data */}
