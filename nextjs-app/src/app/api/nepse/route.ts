@@ -1,0 +1,121 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { supabase } from '@/lib/supabase'
+
+export async function GET(request: NextRequest) {
+  try {
+    // Get query parameters
+    const { searchParams } = new URL(request.url)
+    const type = searchParams.get('type') || 'overview'
+    const limit = parseInt(searchParams.get('limit') || '50')
+
+    switch (type) {
+      case 'overview':
+        return await getMarketOverview()
+      case 'historical':
+        return await getHistoricalData(limit)
+      case 'stocks':
+        return await getStockData(limit)
+      case 'indices':
+        return await getIndicesData()
+      default:
+        return NextResponse.json({ error: 'Invalid type parameter' }, { status: 400 })
+    }
+  } catch (error) {
+    console.error('Error fetching NEPSE data:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+async function getMarketOverview() {
+  try {
+    // Get latest indices data
+    const { data: indicesData, error: indicesError } = await supabase
+      .from('nepse_indices')
+      .select('*')
+      .order('date', { ascending: false })
+      .limit(1)
+
+    if (indicesError) throw indicesError
+
+    // Get latest stock data
+    const { data: stocksData, error: stocksError } = await supabase
+      .from('nepse_stocks')
+      .select('*')
+      .order('last_trade_time', { ascending: false })
+      .limit(20)
+
+    if (stocksError) throw stocksError
+
+    // Get latest index data
+    const { data: indexData, error: indexError } = await supabase
+      .from('nepse_index')
+      .select('*')
+      .order('date', { ascending: false })
+      .limit(1)
+
+    if (indexError) throw indexError
+
+    const overview = {
+      indices: indicesData || [],
+      stocks: stocksData || [],
+      index: indexData?.[0] || null,
+      last_updated: new Date().toISOString()
+    }
+
+    return NextResponse.json(overview)
+  } catch (error) {
+    console.error('Error getting market overview:', error)
+    throw error
+  }
+}
+
+async function getHistoricalData(limit: number) {
+  try {
+    const { data, error } = await supabase
+      .from('nepse_index')
+      .select('*')
+      .order('date', { ascending: false })
+      .limit(limit)
+
+    if (error) throw error
+
+    return NextResponse.json(data || [])
+  } catch (error) {
+    console.error('Error getting historical data:', error)
+    throw error
+  }
+}
+
+async function getStockData(limit: number) {
+  try {
+    const { data, error } = await supabase
+      .from('nepse_stocks')
+      .select('*')
+      .order('volume', { ascending: false })
+      .limit(limit)
+
+    if (error) throw error
+
+    return NextResponse.json(data || [])
+  } catch (error) {
+    console.error('Error getting stock data:', error)
+    throw error
+  }
+}
+
+async function getIndicesData() {
+  try {
+    const { data, error } = await supabase
+      .from('nepse_indices')
+      .select('*')
+      .order('date', { ascending: false })
+      .limit(10)
+
+    if (error) throw error
+
+    return NextResponse.json(data || [])
+  } catch (error) {
+    console.error('Error getting indices data:', error)
+    throw error
+  }
+}

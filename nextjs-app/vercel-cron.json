@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/nepse-sync",
+      "schedule": "*/30 4-9 * * 1-5"
+    }
+  ]
+}

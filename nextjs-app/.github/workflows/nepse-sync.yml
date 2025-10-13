@@ -1,0 +1,83 @@
+name: NEPSE Data Sync
+
+on:
+  schedule:
+    # Run every 30 minutes during market hours (Nepal time: UTC+5:45)
+    # Market hours: 10:00 AM - 3:00 PM Nepal time
+    # This translates to 4:15 AM - 9:15 AM UTC
+    - cron: '15 4-9 * * 1-5'  # Every 30 minutes from 4:15 AM to 9:15 AM UTC, Monday to Friday
+  workflow_dispatch:  # Allow manual triggering
+    inputs:
+      sync_type:
+        description: 'Type of data to sync'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - indices
+          - stocks
+          - historical
+
+env:
+  NODE_VERSION: '18'
+  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://sagarmatha-investments.vercel.app' }}
+
+jobs:
+  sync-nepse-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          cd nextjs-app
+          npm ci
+          
+      - name: Run NEPSE data sync
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          cd nextjs-app
+          
+          # Test the sync API
+          echo "🔄 Testing NEPSE sync API..."
+          curl -X GET "${{ env.NEXT_PUBLIC_APP_URL }}/api/nepse/sync?type=${{ github.event.inputs.sync_type || 'all' }}" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            --max-time 300 \
+            --retry 3 \
+            --retry-delay 10
+            
+      - name: Verify data sync
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        run: |
+          echo "✅ Verifying data sync..."
+          curl -X GET "${{ env.NEXT_PUBLIC_APP_URL }}/api/nepse?type=overview" \
+            -H "Content-Type: application/json" \
+            --max-time 60
+            
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ NEPSE data sync failed!"
+          # Add notification logic here (Slack, Discord, email, etc.)
+          
+      - name: Notify on success
+        if: success()
+        run: |
+          echo "✅ NEPSE data sync completed successfully!"
+          # Add success notification logic here
