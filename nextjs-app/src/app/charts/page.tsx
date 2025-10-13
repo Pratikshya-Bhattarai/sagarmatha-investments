@@ -6,6 +6,7 @@ import { ScrollToTop } from "@/components/ui/scroll-to-top"
 import { ChartComponent, generatePortfolioData, generateAssetAllocationData, generateMonthlyReturnsData } from "@/components/charts/chart-component"
 import { TradingViewWidget, TradingViewMiniChart, TradingViewMarketOverview } from "@/components/charts/tradingview-widget"
 import { NEPSERealData } from "@/components/charts/nepse-real-data"
+import { NEPSEStaticData } from "@/components/charts/nepse-static-data"
 
 export default function Charts() {
   return (
@@ -77,7 +78,7 @@ export default function Charts() {
         {/* NEPSE Real Data Section */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <NEPSERealData />
+            <NEPSEStaticData />
           </div>
         </section>
 
