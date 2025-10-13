@@ -156,6 +156,11 @@ export function NEPSELiveData() {
         last_updated: data.last_updated || new Date().toISOString()
       }
       
+      // Show message if using fallback data
+      if (data.source === 'fallback') {
+        setError('Using sample data - Database not configured')
+      }
+      
       setMarketData(transformedData)
       setLastUpdate(new Date())
     } catch (err) {
@@ -201,16 +206,57 @@ export function NEPSELiveData() {
   }
 
   if (error) {
+    const isFallbackError = error.includes('sample data') || error.includes('Database not configured')
+    
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+      <div className={`border rounded-lg p-4 ${
+        isFallbackError 
+          ? 'bg-yellow-50 border-yellow-200' 
+          : 'bg-red-50 border-red-200'
+      }`}>
         <div className="flex items-center">
-          <div className="text-red-600 mr-3">⚠️</div>
+          <div className={`mr-3 ${
+            isFallbackError ? 'text-yellow-600' : 'text-red-600'
+          }`}>
+            {isFallbackError ? 'ℹ️' : '⚠️'}
+          </div>
           <div>
-            <h3 className="text-red-800 font-semibold">Error Loading Data</h3>
-            <p className="text-red-600">{error}</p>
+            <h3 className={`font-semibold ${
+              isFallbackError ? 'text-yellow-800' : 'text-red-800'
+            }`}>
+              {isFallbackError ? 'Using Sample Data' : 'Error Loading Data'}
+            </h3>
+            <p className={`${
+              isFallbackError ? 'text-yellow-600' : 'text-red-600'
+            }`}>
+              {error}
+            </p>
+            {isFallbackError && (
+              <div className="mt-2 text-sm text-yellow-700">
+                <p>To use real NEPSE data:</p>
+                <ol className="list-decimal list-inside mt-1 space-y-1">
+                  <li>Set up Supabase database</li>
+                  <li>Configure environment variables in Vercel</li>
+                  <li>Import NEPSE data</li>
+                </ol>
+                <p className="mt-2">
+                  <a 
+                    href="/api/debug" 
+                    target="_blank" 
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Check configuration status →
+                  </a>
+                </p>
+              </div>
+            )}
             <button 
               onClick={fetchNEPSEData}
-              className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              className={`mt-2 px-4 py-2 rounded transition-colors ${
+                isFallbackError
+                  ? 'bg-yellow-600 text-white hover:bg-yellow-700'
+                  : 'bg-red-600 text-white hover:bg-red-700'
+              }`}
             >
               Retry
             </button>

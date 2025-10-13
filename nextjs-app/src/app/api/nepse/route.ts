@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { getFallbackNEPSEData, isSupabaseConfigured } from '@/lib/nepse-data'
 
 export async function GET(request: NextRequest) {
   try {
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      console.log('Supabase not configured, returning fallback data')
+      const fallbackData = getFallbackNEPSEData()
+      return NextResponse.json(fallbackData)
+    }
+
     // Get query parameters
     const { searchParams } = new URL(request.url)
     const type = searchParams.get('type') || 'overview'
@@ -22,7 +30,9 @@ export async function GET(request: NextRequest) {
     }
   } catch (error) {
     console.error('Error fetching NEPSE data:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    // Return fallback data on error
+    const fallbackData = getFallbackNEPSEData()
+    return NextResponse.json(fallbackData)
   }
 }
 
