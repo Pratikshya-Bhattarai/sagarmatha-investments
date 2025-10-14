@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "sagarmatha_backend/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "sagarmatha_backend/wsgi.py"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "sagarmatha_backend/wsgi.py"
+    }
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "sagarmatha_backend.settings"
+  }
+}

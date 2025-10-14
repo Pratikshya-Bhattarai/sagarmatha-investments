@@ -1,0 +1,2 @@
+web: gunicorn sagarmatha_backend.wsgi:application --bind 0.0.0.0:$PORT
+worker: celery -A sagarmatha_backend worker --loglevel=info
