@@ -29,12 +29,10 @@ export async function GET(request: NextRequest) {
       console.log('Django backend not available, using fallback data:', djangoError)
     }
 
-    // Fallback to Supabase or sample data
-    if (!isSupabaseConfigured()) {
-      console.log('Supabase not configured, using fallback data')
-      const fallbackData = getFallbackNEPSEData()
-      return NextResponse.json(fallbackData)
-    }
+    // Always use fallback data for now to ensure it works
+    console.log('Using fallback NEPSE data')
+    const fallbackData = getFallbackNEPSEData()
+    return NextResponse.json(fallbackData)
 
     // Get query parameters
     const { searchParams } = new URL(request.url)
