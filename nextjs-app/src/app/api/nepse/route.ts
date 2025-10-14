@@ -6,16 +6,32 @@ export async function GET(request: NextRequest) {
   try {
     console.log('NEPSE API called')
     
-    // Always return fallback data for now to ensure it works
-    console.log('Returning fallback NEPSE data')
-    const fallbackData = getFallbackNEPSEData()
-    return NextResponse.json(fallbackData)
+    // Check if Django backend is available
+    const djangoApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+    
+    try {
+      // Try to fetch from Django backend
+      const response = await fetch(`${djangoApiUrl}/overview/overview/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Add timeout
+        signal: AbortSignal.timeout(5000),
+      })
 
-    // TODO: Uncomment this when Supabase is properly configured
-    /*
-    // Check if Supabase is configured
+      if (response.ok) {
+        const data = await response.json()
+        console.log('Successfully fetched data from Django backend')
+        return NextResponse.json(data)
+      }
+    } catch (djangoError) {
+      console.log('Django backend not available, using fallback data:', djangoError)
+    }
+
+    // Fallback to Supabase or sample data
     if (!isSupabaseConfigured()) {
-      console.log('Supabase not configured, returning fallback data')
+      console.log('Supabase not configured, using fallback data')
       const fallbackData = getFallbackNEPSEData()
       return NextResponse.json(fallbackData)
     }
@@ -37,7 +53,6 @@ export async function GET(request: NextRequest) {
       default:
         return NextResponse.json({ error: 'Invalid type parameter' }, { status: 400 })
     }
-    */
   } catch (error) {
     console.error('Error fetching NEPSE data:', error)
     // Return fallback data on error

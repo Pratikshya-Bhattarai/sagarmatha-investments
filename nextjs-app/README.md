@@ -15,20 +15,23 @@ A modern, responsive web application for Sagarmatha Investments, a brokerage and
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 15.5.4
-- **Frontend**: React 19.1.0
-- **Language**: TypeScript 5
+- **Frontend**: Next.js 15.5.4 with React 19.1.0
+- **Backend**: Django 5.0.8 with Django REST Framework
+- **Language**: TypeScript 5 (Frontend), Python 3.11 (Backend)
 - **Styling**: Tailwind CSS 4
-- **Database**: Supabase
+- **Database**: SQLite (Development) / PostgreSQL (Production)
 - **Charts**: Chart.js with React Chart.js 2
-- **Deployment**: Vercel
+- **Data Sources**: Kaggle NEPSE Dataset, Live NEPSE API
+- **Deployment**: Vercel (Frontend), Heroku/Railway (Backend)
 
 ## 📦 Installation
+
+### Frontend (Next.js)
 
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd sagarmatha-investments
+   cd sagarmatha-investments/nextjs-app
    ```
 
 2. **Install dependencies**
@@ -43,6 +46,7 @@ A modern, responsive web application for Sagarmatha Investments, a brokerage and
    
    Fill in the required environment variables:
    ```env
+   NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
@@ -52,8 +56,51 @@ A modern, responsive web application for Sagarmatha Investments, a brokerage and
    npm run dev
    ```
 
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+### Backend (Django)
+
+1. **Navigate to Django backend**
+   ```bash
+   cd django-backend
+   ```
+
+2. **Create virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Set up Django**
+   ```bash
+   python setup.py
+   ```
+
+5. **Run the Django server**
+   ```bash
+   python manage.py runserver
+   ```
+
+### Full Stack Development
+
+1. **Start both servers**
+   ```bash
+   # Terminal 1: Django backend
+   cd django-backend
+   python manage.py runserver
+
+   # Terminal 2: Next.js frontend
+   cd nextjs-app
+   npm run dev
+   ```
+
+2. **Open your browser**
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+   - Backend API: [http://localhost:8000/api/v1](http://localhost:8000/api/v1)
+   - Django Admin: [http://localhost:8000/admin](http://localhost:8000/admin)
 
 ## 🚀 Deployment
 

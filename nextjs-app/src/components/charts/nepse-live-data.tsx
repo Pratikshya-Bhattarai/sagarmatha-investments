@@ -1,420 +1,315 @@
-"use client"
+'use client';
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { Line, Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from 'chart.js';
+import { apiClient, ChartData, NEPSEIndexData, NEPSEStockData } from '@/lib/api';
 
-interface NEPSEStock {
-  symbol: string
-  company_name: string
-  sector: string
-  current_price: number
-  change: number
-  change_percent: number
-  volume: number
-  turnover: number
-  high_52w: number
-  low_52w: number
-  market_cap: string
-  pe_ratio: number
-  last_trade_time: string
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
+
+interface NEPSELiveDataProps {
+  className?: string;
 }
 
-interface NEPSEIndex {
-  name: string
-  symbol: string
-  current: number
-  change: number
-  change_percent: number
-  high_52w: number
-  low_52w: number
-}
-
-interface NEPSEMarketData {
-  indices: NEPSEIndex[]
-  top_gainers: NEPSEStock[]
-  top_losers: NEPSEStock[]
-  most_traded: NEPSEStock[]
-  last_updated: string
-}
-
-export function NEPSELiveData() {
-  const [marketData, setMarketData] = useState<NEPSEMarketData | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null)
-
-  // Mock data generator for demonstration
-  const generateMockNEPSEData = (): NEPSEMarketData => {
-    const sectors = ['Banking', 'Insurance', 'Development Bank', 'Finance', 'Hotel', 'Trading', 'Manufacturing']
-    const companies = [
-      { symbol: 'NICL', name: 'Nepal Investment Bank Limited' },
-      { symbol: 'NABIL', name: 'Nabil Bank Limited' },
-      { symbol: 'SCB', name: 'Standard Chartered Bank Nepal Limited' },
-      { symbol: 'HBL', name: 'Himalayan Bank Limited' },
-      { symbol: 'GBIME', name: 'Global IME Bank Limited' },
-      { symbol: 'NMB', name: 'NMB Bank Limited' },
-      { symbol: 'PRVU', name: 'Prabhu Bank Limited' },
-      { symbol: 'SBL', name: 'Siddhartha Bank Limited' },
-      { symbol: 'CBL', name: 'Citizens Bank International Limited' },
-      { symbol: 'KBL', name: 'Kumari Bank Limited' },
-      { symbol: 'LBL', name: 'Laxmi Bank Limited' },
-      { symbol: 'MBL', name: 'Machhapuchhre Bank Limited' },
-      { symbol: 'NBB', name: 'Nepal Bangladesh Bank Limited' },
-      { symbol: 'NCCB', name: 'Nepal Credit and Commerce Bank Limited' },
-      { symbol: 'NIB', name: 'Nepal Investment Bank Limited' }
-    ]
-
-    const generateStock = (company: typeof companies[0], isGainer: boolean = false, isLoser: boolean = false): NEPSEStock => {
-      const basePrice = Math.random() * 1000 + 100
-      let change = (Math.random() - 0.5) * 20
-      
-      if (isGainer) change = Math.abs(change) + Math.random() * 10
-      if (isLoser) change = -(Math.abs(change) + Math.random() * 10)
-      
-      const currentPrice = basePrice + change
-      const changePercent = (change / basePrice) * 100
-      
-      return {
-        symbol: company.symbol,
-        company_name: company.name,
-        sector: sectors[Math.floor(Math.random() * sectors.length)],
-        current_price: Math.round(currentPrice * 100) / 100,
-        change: Math.round(change * 100) / 100,
-        change_percent: Math.round(changePercent * 100) / 100,
-        volume: Math.floor(Math.random() * 100000) + 10000,
-        turnover: Math.floor(Math.random() * 50000000) + 1000000,
-        high_52w: Math.round((basePrice + Math.random() * 200) * 100) / 100,
-        low_52w: Math.round((basePrice - Math.random() * 100) * 100) / 100,
-        market_cap: `${(Math.random() * 50 + 5).toFixed(1)}B`,
-        pe_ratio: Math.round((Math.random() * 30 + 5) * 100) / 100,
-        last_trade_time: new Date().toISOString()
-      }
-    }
-
-    const indices: NEPSEIndex[] = [
-      {
-        name: 'NEPSE Index',
-        symbol: 'NEPSE',
-        current: 2847.23 + (Math.random() - 0.5) * 100,
-        change: (Math.random() - 0.5) * 50,
-        change_percent: (Math.random() - 0.5) * 3,
-        high_52w: 3200.50,
-        low_52w: 2400.25
-      },
-      {
-        name: 'Sensitive Index',
-        symbol: 'SENSITIVE',
-        current: 567.89 + (Math.random() - 0.5) * 20,
-        change: (Math.random() - 0.5) * 15,
-        change_percent: (Math.random() - 0.5) * 2,
-        high_52w: 600.00,
-        low_52w: 480.50
-      },
-      {
-        name: 'Float Index',
-        symbol: 'FLOAT',
-        current: 198.45 + (Math.random() - 0.5) * 10,
-        change: (Math.random() - 0.5) * 8,
-        change_percent: (Math.random() - 0.5) * 2,
-        high_52w: 220.00,
-        low_52w: 180.00
-      }
-    ]
-
-    const topGainers = companies.slice(0, 5).map(company => generateStock(company, true, false))
-    const topLosers = companies.slice(5, 10).map(company => generateStock(company, false, true))
-    const mostTraded = companies.slice(10, 15).map(company => generateStock(company))
-
-    return {
-      indices,
-      top_gainers: topGainers.sort((a, b) => b.change_percent - a.change_percent),
-      top_losers: topLosers.sort((a, b) => a.change_percent - b.change_percent),
-      most_traded: mostTraded.sort((a, b) => b.volume - a.volume),
-      last_updated: new Date().toISOString()
-    }
-  }
-
-  const fetchNEPSEData = async () => {
-    try {
-      setLoading(true)
-      setError(null)
-      
-      // Fetch from Supabase API
-      const response = await fetch('/api/nepse?type=overview')
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      const data = await response.json()
-      
-      // Transform the data to match the expected format
-      const transformedData: NEPSEMarketData = {
-        indices: data.indices || [],
-        top_gainers: data.stocks?.filter((stock: any) => stock.change_percent > 0).sort((a: any, b: any) => b.change_percent - a.change_percent).slice(0, 5) || [],
-        top_losers: data.stocks?.filter((stock: any) => stock.change_percent < 0).sort((a: any, b: any) => a.change_percent - b.change_percent).slice(0, 5) || [],
-        most_traded: data.stocks?.sort((a: any, b: any) => b.volume - a.volume).slice(0, 5) || [],
-        last_updated: data.last_updated || new Date().toISOString()
-      }
-      
-      // Show message if using fallback data
-      if (data.source === 'fallback') {
-        setError('Using sample data - Database not configured')
-      }
-      
-      setMarketData(transformedData)
-      setLastUpdate(new Date())
-    } catch (err) {
-      console.error('Error fetching NEPSE data:', err)
-      // Fallback to mock data if API fails
-      const mockData = generateMockNEPSEData()
-      setMarketData(mockData)
-      setLastUpdate(new Date())
-      setError('Using mock data - API connection failed')
-    } finally {
-      setLoading(false)
-    }
-  }
+export default function NEPSELiveData({ className = '' }: NEPSELiveDataProps) {
+  const [indexData, setIndexData] = useState<NEPSEIndexData | null>(null);
+  const [chartData, setChartData] = useState<ChartData | null>(null);
+  const [topGainers, setTopGainers] = useState<NEPSEStockData[]>([]);
+  const [topLosers, setTopLosers] = useState<NEPSEStockData[]>([]);
+  const [mostActive, setMostActive] = useState<NEPSEStockData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedTimeframe, setSelectedTimeframe] = useState<number>(30);
 
   useEffect(() => {
-    fetchNEPSEData()
-    
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(fetchNEPSEData, 30000)
-    
-    return () => clearInterval(interval)
-  }, [])
+    fetchData();
+    // Set up auto-refresh every 5 minutes
+    const interval = setInterval(fetchData, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [selectedTimeframe]);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch all data in parallel
+      const [
+        indexResponse,
+        chartResponse,
+        gainersResponse,
+        losersResponse,
+        activeResponse,
+      ] = await Promise.all([
+        apiClient.getLatestNEPSEIndex(),
+        apiClient.getNEPSEIndexChartData(selectedTimeframe),
+        apiClient.getTopGainers(5),
+        apiClient.getTopLosers(5),
+        apiClient.getMostActive(5),
+      ]);
+
+      setIndexData(indexResponse.data);
+      setChartData(chartResponse.data);
+      setTopGainers(gainersResponse.data);
+      setTopLosers(losersResponse.data);
+      setMostActive(activeResponse.data);
+    } catch (err) {
+      console.error('Error fetching NEPSE data:', err);
+      setError('Failed to fetch live data. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: `NEPSE Index - Last ${selectedTimeframe} Days`,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        title: {
+          display: true,
+          text: 'Index Value',
+        },
+      },
+      y1: {
+        type: 'linear' as const,
+        display: true,
+        position: 'right' as const,
+        title: {
+          display: true,
+          text: 'Volume',
+        },
+        grid: {
+          drawOnChartArea: false,
+        },
+      },
+    },
+    interaction: {
+      intersect: false,
+      mode: 'index' as const,
+    },
+  };
 
   const formatNumber = (num: number) => {
-    return new Intl.NumberFormat('en-US').format(num)
-  }
+    return new Intl.NumberFormat('en-NP').format(num);
+  };
 
   const formatCurrency = (num: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-NP', {
       style: 'currency',
       currency: 'NPR',
-      minimumFractionDigits: 2
-    }).format(num)
-  }
+      minimumFractionDigits: 2,
+    }).format(num);
+  };
 
-  if (loading && !marketData) {
+  const formatPercent = (num: number) => {
+    return `${num >= 0 ? '+' : ''}${num.toFixed(2)}%`;
+  };
+
+  if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-slate-600">Loading NEPSE data...</span>
+      <div className={`flex items-center justify-center h-96 ${className}`}>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
       </div>
-    )
+    );
   }
 
   if (error) {
-    const isFallbackError = error.includes('sample data') || error.includes('Database not configured')
-    
     return (
-      <div className={`border rounded-lg p-4 ${
-        isFallbackError 
-          ? 'bg-yellow-50 border-yellow-200' 
-          : 'bg-red-50 border-red-200'
-      }`}>
-        <div className="flex items-center">
-          <div className={`mr-3 ${
-            isFallbackError ? 'text-yellow-600' : 'text-red-600'
-          }`}>
-            {isFallbackError ? 'ℹ️' : '⚠️'}
-          </div>
-          <div>
-            <h3 className={`font-semibold ${
-              isFallbackError ? 'text-yellow-800' : 'text-red-800'
-            }`}>
-              {isFallbackError ? 'Using Sample Data' : 'Error Loading Data'}
-            </h3>
-            <p className={`${
-              isFallbackError ? 'text-yellow-600' : 'text-red-600'
-            }`}>
-              {error}
-            </p>
-            {isFallbackError && (
-              <div className="mt-2 text-sm text-yellow-700">
-                <p>To use real NEPSE data:</p>
-                <ol className="list-decimal list-inside mt-1 space-y-1">
-                  <li>Set up Supabase database</li>
-                  <li>Configure environment variables in Vercel</li>
-                  <li>Import NEPSE data</li>
-                </ol>
-                <p className="mt-2">
-                  <a 
-                    href="/api/debug" 
-                    target="_blank" 
-                    className="text-blue-600 hover:text-blue-800 underline"
-                  >
-                    Check configuration status →
-                  </a>
-                </p>
-              </div>
-            )}
-            <button 
-              onClick={fetchNEPSEData}
-              className={`mt-2 px-4 py-2 rounded transition-colors ${
-                isFallbackError
-                  ? 'bg-yellow-600 text-white hover:bg-yellow-700'
-                  : 'bg-red-600 text-white hover:bg-red-700'
-              }`}
-            >
-              Retry
-            </button>
-          </div>
+      <div className={`flex items-center justify-center h-96 ${className}`}>
+        <div className="text-center">
+          <div className="text-red-600 text-xl mb-4">⚠️</div>
+          <p className="text-red-600">{error}</p>
+          <button
+            onClick={fetchData}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Retry
+          </button>
         </div>
       </div>
-    )
+    );
   }
 
-  if (!marketData) return null
-
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900">NEPSE Live Data</h2>
-          <p className="text-slate-600">
-            Last updated: {lastUpdate?.toLocaleTimeString()}
-          </p>
-        </div>
-        <button
-          onClick={fetchNEPSEData}
-          disabled={loading}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
-        >
-          {loading ? 'Refreshing...' : 'Refresh'}
-        </button>
-      </div>
-
-      {/* Market Indices */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-semibold text-slate-900 mb-4">Market Indices</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {marketData.indices.map((index) => (
-            <div key={index.symbol} className="bg-slate-50 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="font-semibold text-slate-900">{index.name}</h4>
-                <span className={`px-2 py-1 rounded text-sm font-medium ${
-                  index.change >= 0 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {index.change >= 0 ? '+' : ''}{index.change_percent.toFixed(2)}%
-                </span>
-              </div>
-              <div className="text-2xl font-bold text-slate-900">
-                {index.current.toFixed(2)}
-              </div>
-              <div className={`text-sm ${
-                index.change >= 0 ? 'text-green-600' : 'text-red-600'
-              }`}>
-                {index.change >= 0 ? '+' : ''}{index.change.toFixed(2)}
-              </div>
-            </div>
+    <div className={`space-y-6 ${className}`}>
+      {/* Header with timeframe selector */}
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-gray-900">Live NEPSE Data</h2>
+        <div className="flex space-x-2">
+          {[7, 30, 90, 365].map((days) => (
+            <button
+              key={days}
+              onClick={() => setSelectedTimeframe(days)}
+              className={`px-3 py-1 rounded text-sm ${
+                selectedTimeframe === days
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              {days === 365 ? '1Y' : `${days}D`}
+            </button>
           ))}
         </div>
       </div>
 
-      {/* Top Gainers */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-semibold text-slate-900 mb-4">Top Gainers</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-slate-200">
-                <th className="text-left py-2">Symbol</th>
-                <th className="text-left py-2">Company</th>
-                <th className="text-right py-2">Price</th>
-                <th className="text-right py-2">Change</th>
-                <th className="text-right py-2">Volume</th>
-              </tr>
-            </thead>
-            <tbody>
-              {marketData.top_gainers.map((stock) => (
-                <tr key={stock.symbol} className="border-b border-slate-100">
-                  <td className="py-2 font-semibold text-slate-900">{stock.symbol}</td>
-                  <td className="py-2 text-slate-600">{stock.company_name}</td>
-                  <td className="py-2 text-right font-semibold">Rs. {stock.current_price}</td>
-                  <td className="py-2 text-right text-green-600 font-semibold">
-                    +{stock.change_percent.toFixed(2)}%
-                  </td>
-                  <td className="py-2 text-right text-slate-600">
+      {/* Current Index Display */}
+      {indexData && (
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <p className="text-sm text-gray-600">Current Index</p>
+              <p className="text-2xl font-bold text-blue-600">
+                {formatNumber(indexData.close_price)}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-gray-600">Change</p>
+              <p className={`text-xl font-bold ${
+                indexData.close_price > indexData.open_price ? 'text-green-600' : 'text-red-600'
+              }`}>
+                {formatNumber(indexData.close_price - indexData.open_price)}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-gray-600">Volume</p>
+              <p className="text-xl font-bold text-gray-800">
+                {formatNumber(indexData.volume)}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-gray-600">Turnover</p>
+              <p className="text-xl font-bold text-gray-800">
+                {formatCurrency(indexData.turnover)}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Chart */}
+      {chartData && (
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="h-96">
+            <Line data={chartData} options={chartOptions} />
+          </div>
+        </div>
+      )}
+
+      {/* Market Summary */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Top Gainers */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold text-green-600 mb-4">Top Gainers</h3>
+          <div className="space-y-3">
+            {topGainers.map((stock, index) => (
+              <div key={stock.id} className="flex justify-between items-center">
+                <div>
+                  <p className="font-medium">{stock.symbol}</p>
+                  <p className="text-sm text-gray-600">{stock.company_name}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold text-green-600">
+                    {formatPercent(stock.change_percent)}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {formatCurrency(stock.current_price)}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Top Losers */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold text-red-600 mb-4">Top Losers</h3>
+          <div className="space-y-3">
+            {topLosers.map((stock, index) => (
+              <div key={stock.id} className="flex justify-between items-center">
+                <div>
+                  <p className="font-medium">{stock.symbol}</p>
+                  <p className="text-sm text-gray-600">{stock.company_name}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold text-red-600">
+                    {formatPercent(stock.change_percent)}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {formatCurrency(stock.current_price)}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Most Active */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold text-blue-600 mb-4">Most Active</h3>
+          <div className="space-y-3">
+            {mostActive.map((stock, index) => (
+              <div key={stock.id} className="flex justify-between items-center">
+                <div>
+                  <p className="font-medium">{stock.symbol}</p>
+                  <p className="text-sm text-gray-600">{stock.company_name}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold text-blue-600">
                     {formatNumber(stock.volume)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {formatCurrency(stock.current_price)}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Top Losers */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-semibold text-slate-900 mb-4">Top Losers</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-slate-200">
-                <th className="text-left py-2">Symbol</th>
-                <th className="text-left py-2">Company</th>
-                <th className="text-right py-2">Price</th>
-                <th className="text-right py-2">Change</th>
-                <th className="text-right py-2">Volume</th>
-              </tr>
-            </thead>
-            <tbody>
-              {marketData.top_losers.map((stock) => (
-                <tr key={stock.symbol} className="border-b border-slate-100">
-                  <td className="py-2 font-semibold text-slate-900">{stock.symbol}</td>
-                  <td className="py-2 text-slate-600">{stock.company_name}</td>
-                  <td className="py-2 text-right font-semibold">Rs. {stock.current_price}</td>
-                  <td className="py-2 text-right text-red-600 font-semibold">
-                    {stock.change_percent.toFixed(2)}%
-                  </td>
-                  <td className="py-2 text-right text-slate-600">
-                    {formatNumber(stock.volume)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Most Traded */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-semibold text-slate-900 mb-4">Most Traded</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-slate-200">
-                <th className="text-left py-2">Symbol</th>
-                <th className="text-left py-2">Company</th>
-                <th className="text-right py-2">Price</th>
-                <th className="text-right py-2">Volume</th>
-                <th className="text-right py-2">Turnover</th>
-              </tr>
-            </thead>
-            <tbody>
-              {marketData.most_traded.map((stock) => (
-                <tr key={stock.symbol} className="border-b border-slate-100">
-                  <td className="py-2 font-semibold text-slate-900">{stock.symbol}</td>
-                  <td className="py-2 text-slate-600">{stock.company_name}</td>
-                  <td className="py-2 text-right font-semibold">Rs. {stock.current_price}</td>
-                  <td className="py-2 text-right text-slate-600">
-                    {formatNumber(stock.volume)}
-                  </td>
-                  <td className="py-2 text-right text-slate-600">
-                    Rs. {formatNumber(stock.turnover)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Refresh Button */}
+      <div className="text-center">
+        <button
+          onClick={fetchData}
+          disabled={loading}
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+        >
+          {loading ? 'Refreshing...' : 'Refresh Data'}
+        </button>
       </div>
     </div>
-  )
+  );
 }
-
