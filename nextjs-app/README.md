@@ -1,49 +1,34 @@
-# Sagarmatha Investments - NEPSE Data Platform
+# Sagarmatha Investments - Next.js Application
 
-A modern Next.js application for Sagarmatha Investments, featuring real-time NEPSE (Nepal Stock Exchange) data integration with Supabase database.
+A modern, responsive web application for Sagarmatha Investments, a brokerage and investment advisory firm in Nepal. Built with Next.js 15, React 19, TypeScript, and Tailwind CSS.
 
 ## 🚀 Features
 
-- **Real-time NEPSE Data**: Live market data from multiple sources
-- **Supabase Integration**: Robust database backend with real-time updates
-- **Automated Data Sync**: Scheduled data fetching and storage
-- **Modern UI**: Beautiful, responsive design with dark/light themes
+- **Modern Tech Stack**: Next.js 15 with React 19 and TypeScript
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **NEPSE Integration**: Real-time stock market data from Nepal Stock Exchange
 - **PWA Support**: Progressive Web App capabilities
-- **Chart Integration**: Interactive charts for market analysis
-- **API-First**: Comprehensive REST API for data access
-
-## 📊 NEPSE Data Sources
-
-The application fetches data from multiple sources:
-
-1. **Official NEPSE APIs** (when available)
-2. **Alternative data providers**
-3. **Third-party financial APIs**
-4. **Kaggle historical datasets**
+- **SEO Optimized**: Built-in SEO with Next.js metadata API
+- **Analytics**: Google Analytics integration
+- **Theme Support**: Dark/Light mode toggle
+- **Charts**: Interactive charts for market data visualization
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 15, React 19, TypeScript
+- **Framework**: Next.js 15.5.4
+- **Frontend**: React 19.1.0
+- **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 4
-- **Database**: Supabase (PostgreSQL)
-- **Charts**: Chart.js, React-ChartJS-2
+- **Database**: Supabase
+- **Charts**: Chart.js with React Chart.js 2
 - **Deployment**: Vercel
-- **CI/CD**: GitHub Actions
 
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js 18+ 
-- Supabase account
-- Git
-
-### Installation
+## 📦 Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/sagarmatha-investments.git
-   cd sagarmatha-investments/nextjs-app
+   git clone <repository-url>
+   cd sagarmatha-investments
    ```
 
 2. **Install dependencies**
@@ -53,205 +38,137 @@ The application fetches data from multiple sources:
 
 3. **Set up environment variables**
    ```bash
-   cp .env.local.example .env.local
+   cp .env.example .env.local
    ```
    
-   Update `.env.local` with your Supabase credentials:
+   Fill in the required environment variables:
    ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
    ```
 
-4. **Set up Supabase database**
-   ```bash
-   npm run setup-db
-   ```
-   
-   Then run the SQL commands in your Supabase dashboard (see `SUPABASE_SETUP.md`)
-
-5. **Import NEPSE data**
-   ```bash
-   npm run import-nepse
-   ```
-
-6. **Start development server**
+4. **Run the development server**
    ```bash
    npm run dev
    ```
 
-## 📁 Project Structure
-
-```
-nextjs-app/
-├── src/
-│   ├── app/                    # Next.js app router
-│   │   ├── api/               # API routes
-│   │   │   ├── nepse/         # NEPSE data APIs
-│   │   │   └── cron/          # Scheduled tasks
-│   │   ├── charts/            # Charts page
-│   │   ├── nepse/             # NEPSE data page
-│   │   └── ...                # Other pages
-│   ├── components/            # React components
-│   │   ├── charts/            # Chart components
-│   │   ├── layout/            # Layout components
-│   │   └── ui/                # UI components
-│   └── lib/                   # Utilities
-│       └── supabase.ts        # Supabase client
-├── scripts/                   # Utility scripts
-│   └── import-nepse-data.js   # Data import script
-├── data/                      # Data files
-├── .github/workflows/         # GitHub Actions
-└── docs/                      # Documentation
-```
-
-## 🔌 API Endpoints
-
-### NEPSE Data APIs
-
-- `GET /api/nepse` - Get NEPSE data from database
-- `GET /api/nepse/fetch` - Fetch live data from external sources
-- `GET /api/nepse/sync` - Sync data to database
-- `GET /api/cron/nepse-sync` - Scheduled sync endpoint
-
-### Query Parameters
-
-- `type`: `overview` | `historical` | `stocks` | `indices` | `all`
-- `limit`: Number of records to return
-- `store`: `true` | `false` - Whether to store fetched data
-
-### Example Usage
-
-```bash
-# Get market overview
-curl "http://localhost:3000/api/nepse?type=overview"
-
-# Fetch and store live data
-curl "http://localhost:3000/api/nepse/fetch?type=all&store=true"
-
-# Sync data to database
-curl "http://localhost:3000/api/nepse/sync?type=all"
-```
-
-## 📊 Database Schema
-
-### Tables
-
-1. **nepse_index** - Historical index data
-2. **nepse_stocks** - Stock information
-3. **nepse_indices** - Market indices
-
-See `SUPABASE_SETUP.md` for detailed schema.
-
-## 🔄 Automated Data Sync
-
-### GitHub Actions
-- Runs every 30 minutes during market hours
-- Configurable sync types
-- Automatic retry on failure
-
-### Vercel Cron
-- Alternative to GitHub Actions
-- Configure in `vercel-cron.json`
-
-### Manual Sync
-```bash
-# Sync all data
-npm run sync-nepse
-
-# Test API endpoints
-npm run test-api
-```
-
-## 📈 Data Sources
-
-### Primary Sources
-1. **NEPSE Official APIs**
-2. **Merolagani APIs**
-3. **Alternative financial data providers**
-
-### Fallback
-- Mock data generation for development
-- Historical data from Kaggle datasets
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
 
-1. **Connect to Vercel**
-   ```bash
-   npm install -g vercel
-   vercel
-   ```
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set up environment variables in Vercel dashboard
+4. Deploy automatically on every push
 
-2. **Set environment variables**
-   - Add Supabase credentials
-   - Configure cron secrets
-
-3. **Deploy**
-   ```bash
-   vercel --prod
-   ```
-
-### Other Platforms
-
-- **Netlify**: Compatible with static export
-- **Railway**: Full-stack deployment
-- **AWS**: Custom deployment
-
-## 🔧 Development
-
-### Available Scripts
+### Manual Deployment
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run type-check   # TypeScript type checking
-npm run import-nepse # Import NEPSE data
-npm run sync-nepse   # Sync live data
-npm run test-api     # Test API endpoints
+npm run build
+npm start
 ```
 
-### Code Quality
+## 📁 Project Structure
 
-- **ESLint**: Code linting
-- **TypeScript**: Type safety
-- **Prettier**: Code formatting (optional)
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── api/               # API routes
+│   ├── about/             # About page
+│   ├── charts/            # Charts page
+│   ├── contact/           # Contact page
+│   ├── nepse/             # NEPSE data pages
+│   └── ...
+├── components/            # React components
+│   ├── charts/            # Chart components
+│   ├── layout/            # Layout components
+│   ├── sections/          # Page sections
+│   └── ui/                # UI components
+└── lib/                   # Utility functions
+    ├── nepse-data.ts      # NEPSE data handling
+    ├── supabase.ts        # Supabase client
+    └── utils.ts           # General utilities
+```
 
-## 📚 Documentation
+## 🔧 Available Scripts
 
-- [Supabase Setup Guide](SUPABASE_SETUP.md)
-- [API Documentation](docs/api.md)
-- [Deployment Guide](docs/deployment.md)
-- [Contributing Guide](CONTRIBUTING.md)
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run type-check` - Run TypeScript type checking
+- `npm run sync-nepse` - Sync NEPSE data
+- `npm run fetch-nepse` - Fetch NEPSE data
+
+## 🌐 API Endpoints
+
+- `/api/nepse` - Get NEPSE market data
+- `/api/nepse/sync` - Sync NEPSE data
+- `/api/nepse/fetch` - Fetch NEPSE data
+- `/api/cron/nepse-sync` - Cron job for data sync
+
+## 📊 NEPSE Integration
+
+The application integrates with Nepal Stock Exchange (NEPSE) to provide:
+
+- Real-time stock prices
+- Market indices
+- Trading volume and turnover
+- Historical data
+- Company information
+
+## 🎨 Styling
+
+The project uses Tailwind CSS for styling with:
+
+- Custom color scheme
+- Responsive design
+- Dark/Light theme support
+- Component-based styling
+
+## 🔒 Environment Variables
+
+Required environment variables:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## 📱 PWA Features
+
+- Offline support
+- Installable on mobile devices
+- Service worker for caching
+- Manifest for app-like experience
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 📞 Contact
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/sagarmatha-investments/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/sagarmatha-investments/discussions)
-- **Email**: support@sagarmathainvestments.com
+**Sagarmatha Investments**
+- Website: [sagarmatha-investments.vercel.app](https://sagarmatha-investments.vercel.app)
+- Email: info@sagarmathainvestments.com
+- Phone: +977-9876543211
 
 ## 🙏 Acknowledgments
 
-- NEPSE for providing market data
-- Supabase for the database platform
-- Vercel for hosting and deployment
-- The open-source community for amazing tools
-
----
-
-**Sagarmatha Investments** - Empowering financial success in Nepal 🇳🇵
+- Next.js team for the amazing framework
+- React team for the UI library
+- Tailwind CSS for the utility-first CSS framework
+- Chart.js for the charting capabilities
+- Supabase for the backend services
