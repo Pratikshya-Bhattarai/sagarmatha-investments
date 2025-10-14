@@ -137,3 +137,62 @@ data/*.json
 *.key
 *.pem
 secrets/
+
+# Local data directory (contains large files and local data)
+local-data/
+local-data/**
+!local-data/README.md
+
+# Large files and datasets
+*.csv
+*.json
+*.xlsx
+*.xls
+*.sqlite
+*.db
+*.sql
+
+# Django local data
+django-backend/db.sqlite3
+django-backend/logs/
+django-backend/data/
+django-backend/staticfiles/
+django-backend/media/
+
+# Python virtual environment
+django-backend/venv/
+django-backend/env/
+django-backend/.venv/
+
+# Large image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.webp
+*.avif
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+
+# Audio files
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+
+# Archive files
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
