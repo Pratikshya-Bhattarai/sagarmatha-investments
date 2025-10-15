@@ -4,7 +4,7 @@ from .models import NEPSEIndex, NEPSEStock, NEPSEIndices, DataUpdateLog
 
 @admin.register(NEPSEIndex)
 class NEPSEIndexAdmin(admin.ModelAdmin):
-    list_display = ['date', 'close_price', 'change', 'volume', 'turnover']
+    list_display = ['date', 'open_price', 'high_price', 'low_price', 'close_price', 'volume', 'turnover']
     list_filter = ['date']
     search_fields = ['date']
     ordering = ['-date']
@@ -20,7 +20,7 @@ class NEPSEStockAdmin(admin.ModelAdmin):
 
 @admin.register(NEPSEIndices)
 class NEPSEIndicesAdmin(admin.ModelAdmin):
-    list_display = ['name', 'symbol', 'current', 'change_percent', 'date']
+    list_display = ['name', 'symbol', 'current', 'change', 'change_percent', 'date']
     list_filter = ['name', 'date']
     search_fields = ['name', 'symbol']
     ordering = ['-date', 'name']

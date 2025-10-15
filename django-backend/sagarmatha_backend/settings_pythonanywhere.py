@@ -69,11 +69,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sagarmatha_backend.wsgi.application'
 
-# Database - Use SQLite for PythonAnywhere free tier
+# Database - Use Supabase PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('SUPABASE_DB_NAME', default='postgres'),
+        'USER': config('SUPABASE_DB_USER', default='postgres'),
+        'PASSWORD': config('SUPABASE_DB_PASSWORD', default=''),
+        'HOST': config('SUPABASE_DB_HOST', default=''),
+        'PORT': config('SUPABASE_DB_PORT', default='5432'),
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 

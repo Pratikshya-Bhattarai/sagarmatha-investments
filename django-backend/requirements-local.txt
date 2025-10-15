@@ -1,0 +1,19 @@
+# Local development requirements (simplified)
+Django==5.0.8
+djangorestframework==3.15.2
+django-cors-headers==4.3.1
+requests==2.31.0
+python-decouple==3.8
+django-filter==24.2
+django-extensions==3.2.3
+whitenoise==6.6.0
+gunicorn==21.2.0
+beautifulsoup4==4.12.3
+lxml==5.1.0
+
+# Optional: Use pre-compiled packages to avoid build issues
+# pandas==2.2.2  # Comment out if build fails
+# numpy==1.26.4  # Comment out if build fails
+# celery==5.3.6  # Comment out if not using background tasks
+# redis==5.0.1   # Comment out if not using Redis
+# psycopg2-binary==2.9.9  # Comment out if not using PostgreSQL

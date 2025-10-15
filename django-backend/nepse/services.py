@@ -154,7 +154,7 @@ class NEPSEDataService:
             NEPSEStock.objects.update_or_create(
                 symbol=symbol,
                 defaults={
-                    'company_name=f"{symbol} Bank Limited"',
+                    'company_name': f"{symbol} Bank Limited",
                     'sector': 'Banking',
                     'current_price': base_price,
                     'change': change,

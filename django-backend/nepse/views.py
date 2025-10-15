@@ -10,7 +10,7 @@ from .serializers import (
     NEPSEIndexSerializer, NEPSEStockSerializer, NEPSEIndicesSerializer,
     DataUpdateLogSerializer, ChartDataSerializer, MarketOverviewSerializer
 )
-from .services import NEPSEDataService, ChartDataService
+from .services_simple import NEPSEDataService, ChartDataService
 import logging
 
 logger = logging.getLogger(__name__)
@@ -89,6 +89,32 @@ class NEPSEStockViewSet(viewsets.ReadOnlyModelViewSet):
             stocks = self.get_queryset()
         serializer = self.get_serializer(stocks, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def latest_price(self, request):
+        """Get latest price for a specific stock symbol"""
+        symbol = request.query_params.get('symbol', '').upper()
+        if not symbol:
+            return Response({'error': 'Symbol parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            stock = NEPSEStock.objects.get(symbol=symbol)
+            return Response({
+                'symbol': stock.symbol,
+                'company_name': stock.company_name,
+                'current_price': float(stock.current_price),
+                'change': float(stock.change),
+                'change_percent': float(stock.change_percent),
+                'volume': stock.volume,
+                'last_trade_time': stock.last_trade_time,
+                'sector': stock.sector,
+                'high_52w': float(stock.high_52w),
+                'low_52w': float(stock.low_52w),
+                'market_cap': stock.market_cap,
+                'pe_ratio': float(stock.pe_ratio) if stock.pe_ratio else None
+            })
+        except NEPSEStock.DoesNotExist:
+            return Response({'error': f'Stock with symbol {symbol} not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class NEPSEIndicesViewSet(viewsets.ReadOnlyModelViewSet):
