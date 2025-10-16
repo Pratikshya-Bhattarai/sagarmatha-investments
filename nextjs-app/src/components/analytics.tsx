@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect } from "react"
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 declare global {
   interface Window {
@@ -40,5 +42,12 @@ export function Analytics() {
     }
   }, [])
 
-  return null
+  return (
+    <>
+      {/* Vercel Analytics */}
+      <VercelAnalytics />
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
+    </>
+  )
 }

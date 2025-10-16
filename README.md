@@ -1,243 +1,211 @@
-# 🏔️ Sagarmatha Investments - NEPSE Market Analytics
+# 🏔️ Sagarmatha Investments - NEPSE Analytics Platform
 
-A comprehensive NEPSE (Nepal Stock Exchange) market analytics application built with Django REST API backend and Next.js React frontend, featuring real-time data, candlestick charts, and stock search functionality.
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat&logo=vercel)](https://sagarmatha-investments.vercel.app)
+[![Python](https://img.shields.io/badge/Backend-Django%20REST%20API-092E20?style=flat&logo=django)](https://pythonanywhere.com)
+[![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-000000?style=flat&logo=next.js)](https://nextjs.org)
+[![Analytics](https://img.shields.io/badge/Analytics-Vercel%20Analytics-000000?style=flat&logo=vercel)](https://vercel.com/analytics)
+
+A comprehensive investment analytics platform for Nepal's stock market (NEPSE) featuring real-time data, interactive charts, and advanced analytics tracking.
 
 ## 🚀 Live Demo
 
-- **Frontend**: [Deployed on Vercel](https://your-app.vercel.app)
-- **Backend API**: [Deployed on PythonAnywhere](https://pratikshyab.pythonanywhere.com/api/v1/)
-- **Database**: Supabase PostgreSQL
+- **Frontend**: [https://sagarmatha-investments.vercel.app](https://sagarmatha-investments.vercel.app)
+- **API Documentation**: [https://sagarmatha-investments.vercel.app/api-docs](https://sagarmatha-investments.vercel.app/api-docs)
+- **NEPSE Analytics**: [https://sagarmatha-investments.vercel.app/charts](https://sagarmatha-investments.vercel.app/charts)
 
-## 📊 Features
+## 📊 NEPSE Data Charts
 
-### 🎯 Core Features
-- **Real-time NEPSE Index** display with historical data
-- **Interactive Candlestick Charts** (30-day trends)
-- **Stock Search** by symbol (e.g., NICL, NABIL, SCB)
-- **Market Indices** overview (Banking, Hydropower, Finance, etc.)
-- **Top Stocks** with price changes and volume
-- **Mobile Responsive** design for all devices
+### Interactive Visualizations
+- **📈 NEPSE Index Trend** - Historical performance line charts
+- **📊 Trading Volume** - Daily volume bar charts  
+- **🥧 Sector Distribution** - Market sector breakdown
+- **📋 Top Stocks Table** - Performance metrics with sorting
+- **📱 Market Indices Cards** - Key index displays
 
-### 🔧 Technical Features
-- **REST API** with Django REST Framework
-- **PostgreSQL Database** on Supabase
-- **Real-time Data** updates
-- **CORS** configured for frontend
-- **Admin Panel** for data management
-- **API Documentation** with all endpoints
+### Real-time Features
+- **⚡ Live Data Updates** - Auto-refresh every 5 minutes
+- **⏱️ Timeframe Selection** - 7D, 30D, 90D, 1Y views
+- **📱 Responsive Design** - Mobile and desktop optimized
+- **🔄 Error Handling** - Graceful data loading states
 
-## 🛠️ Tech Stack
-
-### Backend
-- **Django 5.0.8** - Web framework
-- **Django REST Framework** - API development
-- **PostgreSQL** - Database (Supabase)
-- **Python 3.10+** - Programming language
+## 🛠️ Technology Stack
 
 ### Frontend
-- **Next.js 15.5.4** - React framework
-- **React 19.1.0** - UI library
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **Chart.js** - Data visualization
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Chart.js** - Interactive data visualization
+- **Vercel Analytics** - Privacy-focused tracking
 
-### Database & Hosting
-- **Supabase** - PostgreSQL database
-- **PythonAnywhere** - Backend hosting
-- **Vercel** - Frontend hosting
+### Backend
+- **Django 5.0** - Python web framework
+- **Django REST Framework** - API development
+- **MySQL** - Production database
+- **Redis** - Caching and sessions
+- **Celery** - Background tasks
 
-## 📁 Project Structure
+### Analytics
+- **Vercel Analytics** - User behavior tracking
+- **Vercel Speed Insights** - Performance monitoring
+- **Google Analytics** - Detailed user insights
+- **Custom Tracking** - NEPSE-specific metrics
+
+## 🏗️ Project Structure
 
 ```
 sagarmatha-investments/
-├── django-backend/                 # Django REST API
-│   ├── nepse/                     # NEPSE app
-│   │   ├── models.py              # Database models
-│   │   ├── views.py               # API views
-│   │   ├── serializers.py         # Data serializers
-│   │   └── services_simple.py     # Business logic
-│   ├── sagarmatha_backend/        # Django settings
-│   ├── requirements.txt           # Python dependencies
-│   └── manage.py                  # Django management
-├── nextjs-app/                    # Next.js frontend
+├── nextjs-app/                 # Next.js frontend
 │   ├── src/
-│   │   ├── app/                   # App router pages
-│   │   ├── components/            # React components
-│   │   │   ├── charts/            # Chart components
-│   │   │   └── ui/                # UI components
-│   │   └── lib/                   # Utilities
-│   ├── package.json               # Node dependencies
-│   └── next.config.ts             # Next.js config
-├── SUPABASE_DATABASE_SCHEMA.sql   # Database schema
-├── COMPLETE_DEPLOYMENT_GUIDE.md   # Deployment guide
-└── README.md                      # This file
+│   │   ├── app/                # App router pages
+│   │   │   ├── charts/         # NEPSE analytics page
+│   │   │   ├── nepse-live/     # Live market data
+│   │   │   └── api-docs/       # API documentation
+│   │   ├── components/         # React components
+│   │   │   ├── charts/         # Chart components
+│   │   │   └── sections/       # Page sections
+│   │   ├── lib/               # Utilities and analytics
+│   │   └── hooks/             # Custom React hooks
+│   └── public/                # Static assets
+├── django-backend/            # Django API backend
+│   ├── sagarmatha_backend/    # Django project settings
+│   ├── nepse/                 # NEPSE data models & APIs
+│   └── requirements.txt       # Python dependencies
+└── docs/                      # Documentation
 ```
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Python 3.10+
-- Node.js 18+
-- Git
-- Supabase account
-
-### 1. Clone Repository
-```bash
-git clone https://github.com/your-username/sagarmatha-investments.git
-cd sagarmatha-investments
-```
-
-### 2. Set Up Supabase Database
-1. Create a new project at [supabase.com](https://supabase.com)
-2. Run the SQL script from `SUPABASE_DATABASE_SCHEMA.sql`
-3. Get your database credentials
-
-### 3. Start Backend (Django)
-```bash
-cd django-backend
-python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # macOS/Linux
-
-pip install -r requirements-minimal.txt
-python manage.py migrate
-python manage.py generate_sample_data --days 30
-python manage.py runserver
-```
-
-### 4. Start Frontend (Next.js)
+### Frontend Development
 ```bash
 cd nextjs-app
 npm install
 npm run dev
+# Visit http://localhost:3000
 ```
-
-### 5. Access Application
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000/api/v1/
-- **Admin Panel**: http://localhost:8000/admin/
-
-## 📡 API Endpoints
-
-### Base URL: `http://localhost:8000/api/v1/`
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/` | GET | API root with available endpoints |
-| `/index/` | GET | NEPSE index data |
-| `/index/latest/` | GET | Latest NEPSE index |
-| `/index/chart_data/` | GET | Chart data for visualization |
-| `/stocks/` | GET | All stocks data |
-| `/stocks/latest_price/?symbol=NICL` | GET | Latest price by symbol |
-| `/stocks/top_gainers/` | GET | Top gaining stocks |
-| `/stocks/top_losers/` | GET | Top losing stocks |
-| `/stocks/most_active/` | GET | Most active stocks |
-| `/indices/` | GET | Market indices |
-| `/logs/` | GET | Data update logs |
-
-### Example API Calls
-
-```bash
-# Get latest price for NICL
-curl "http://localhost:8000/api/v1/stocks/latest_price/?symbol=NICL"
-
-# Get 30-day chart data
-curl "http://localhost:8000/api/v1/index/chart_data/?days=30"
-
-# Get top gainers
-curl "http://localhost:8000/api/v1/stocks/top_gainers/?limit=5"
-```
-
-## 🗄️ Database Schema
-
-### Tables
-- **nepse_index** - Daily NEPSE index data
-- **nepse_stocks** - Individual stock information
-- **nepse_indices** - Market indices data
-- **data_update_logs** - Update operation logs
-
-### Sample Data
-The application includes sample data for:
-- 30 days of NEPSE index history
-- 10+ stocks from banking and insurance sectors
-- 6 market indices (NEPSE, Banking, Hydropower, etc.)
-
-## 🚀 Deployment
-
-### Backend (PythonAnywhere)
-1. Follow `COMPLETE_DEPLOYMENT_GUIDE.md`
-2. Configure Supabase database
-3. Deploy to PythonAnywhere
-4. Set up scheduled tasks for data updates
-
-### Frontend (Vercel)
-1. Connect GitHub repository to Vercel
-2. Configure environment variables
-3. Deploy automatically on push
-
-### Database (Supabase)
-1. Create new project
-2. Run database schema
-3. Configure connection settings
-4. Set up Row Level Security (RLS)
-
-## 📱 Features in Detail
-
-### 🎯 Stock Search
-- Search stocks by symbol (NICL, NABIL, SCB, etc.)
-- Real-time price information
-- 52-week high/low data
-- P/E ratio and market cap
-- Volume and turnover data
-
-### 📊 Candlestick Charts
-- 30-day historical data
-- Interactive charts with Chart.js
-- OHLC (Open, High, Low, Close) data
-- Color-coded for gains/losses
-
-### 📈 Market Overview
-- Current NEPSE index
-- Market indices (Banking, Hydropower, etc.)
-- Top gainers and losers
-- Most active stocks
-- Real-time updates
-
-## 🔧 Development
 
 ### Backend Development
 ```bash
 cd django-backend
-python manage.py makemigrations
-python manage.py migrate
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
 python manage.py runserver
+# API available at http://localhost:8000
 ```
 
-### Frontend Development
+## 📊 NEPSE Analytics Features
+
+### Market Data Visualization
+- **Real-time NEPSE Index** - Live market performance
+- **Historical Trends** - Interactive line charts
+- **Volume Analysis** - Trading volume patterns
+- **Sector Breakdown** - Market distribution analysis
+- **Stock Performance** - Top gainers and losers
+
+### Interactive Charts
+- **Line Charts** - Price trends over time
+- **Bar Charts** - Volume and performance metrics
+- **Doughnut Charts** - Sector distribution
+- **Data Tables** - Sortable stock listings
+- **Responsive Cards** - Market index displays
+
+### Data Features
+- **Auto-refresh** - Real-time data updates
+- **Timeframe Selection** - Multiple time periods
+- **Error Handling** - Graceful data loading
+- **Mobile Optimized** - Responsive design
+- **Performance Tracking** - Analytics integration
+
+## 🔧 API Endpoints
+
+### NEPSE Data APIs
 ```bash
-cd nextjs-app
-npm run dev
-npm run build
-npm run start
+GET /api/nepse/                    # Market overview
+GET /api/nepse/fetch               # Fetch latest data
+GET /api/nepse/sync                # Sync with NEPSE
+GET /api/nepse/charts              # Chart data
 ```
 
-### Database Management
+### Analytics APIs
 ```bash
-# Generate sample data
-python manage.py generate_sample_data --days 60
-
-# Import from Kaggle
-python manage.py import_kaggle_nepse path/to/data.csv
-
-# Update data
-python manage.py update_nepse_data --type all --source sample
+GET /api/analytics/market-summary   # Market summary
+GET /api/analytics/portfolio       # Portfolio analysis
+GET /api/reports/daily             # Daily reports
+GET /api/reports/weekly            # Weekly summaries
 ```
 
-## 📊 Data Sources
+## 📈 Analytics Integration
 
-1. **Sample Data** - Generated for development and testing
-2. **Kaggle Dataset** - Historical NEPSE data from Kaggle
-3. **Real-time API** - NEPSE official API (when available)
+### User Tracking
+- **Page Views** - Navigation patterns
+- **NEPSE Interactions** - Data usage analytics
+- **Investment Actions** - User behavior tracking
+- **Chart Interactions** - Visualization usage
+- **Performance Metrics** - Core Web Vitals
+
+### Business Insights
+- **User Engagement** - Session duration and pages
+- **Feature Adoption** - Most used functionality
+- **Conversion Tracking** - User journey analysis
+- **Error Monitoring** - Technical issue tracking
+
+## 🚀 Deployment
+
+### Frontend (Vercel)
+- **Automatic Deployments** - GitHub integration
+- **Environment Variables** - Secure configuration
+- **Analytics Enabled** - Vercel Analytics + Speed Insights
+- **Custom Domain** - Professional branding
+
+### Backend (PythonAnywhere)
+- **Production Database** - MySQL configuration
+- **Redis Caching** - Performance optimization
+- **Background Tasks** - Celery integration
+- **Monitoring** - Error tracking and logging
+
+## 📊 Screenshots
+
+### NEPSE Analytics Dashboard
+![NEPSE Charts](https://via.placeholder.com/800x400/1e40af/ffffff?text=NEPSE+Analytics+Dashboard)
+
+### Market Data Visualization
+![Market Charts](https://via.placeholder.com/800x400/059669/ffffff?text=Interactive+Market+Charts)
+
+### Real-time Data
+![Live Data](https://via.placeholder.com/800x400/dc2626/ffffff?text=Real-time+NEPSE+Data)
+
+## 🎯 Key Features
+
+### ✅ **Real-time NEPSE Data**
+- Live market updates
+- Historical data analysis
+- Sector performance tracking
+- Stock price monitoring
+
+### ✅ **Interactive Charts**
+- Multiple chart types
+- Timeframe selection
+- Responsive design
+- Mobile optimization
+
+### ✅ **Analytics Integration**
+- User behavior tracking
+- Performance monitoring
+- Business insights
+- Error tracking
+
+### ✅ **Production Ready**
+- Scalable architecture
+- Security best practices
+- Performance optimization
+- Monitoring and logging
+
+## 📚 Documentation
+
+- **[Frontend Setup](nextjs-app/README.md)** - Next.js development guide
+- **[Backend Setup](django-backend/README.md)** - Django API guide
+- **[Analytics Setup](nextjs-app/ANALYTICS_SETUP.md)** - Analytics configuration
+- **[Deployment Guide](GITHUB_SETUP_GUIDE.md)** - Production deployment
 
 ## 🤝 Contributing
 
@@ -251,22 +219,23 @@ python manage.py update_nepse_data --type all --source sample
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🏔️ About Sagarmatha Investments
+
+Sagarmatha Investments is a modern brokerage and investment advisory platform for Nepal's stock market. We provide:
+
+- **Stock Trading** - NEPSE market access
+- **Portfolio Management** - Professional PMS services
+- **Research & Analysis** - Market insights and reports
+- **Investment Advisory** - Personalized financial guidance
+
 ## 📞 Contact
 
-**Sagarmatha Investments**
-- Email: info@sagarmathainvestments.com
-- Website: [sagarmatha-investments.vercel.app](https://sagarmatha-investments.vercel.app)
-- GitHub: [github.com/your-username/sagarmatha-investments](https://github.com/your-username/sagarmatha-investments)
-
-## 🙏 Acknowledgments
-
-- NEPSE (Nepal Stock Exchange) for market data
-- Supabase for database hosting
-- PythonAnywhere for backend hosting
-- Vercel for frontend hosting
-- Chart.js for data visualization
-- Django and Next.js communities
+- **Website**: [https://sagarmatha-investments.vercel.app](https://sagarmatha-investments.vercel.app)
+- **Email**: info@sagarmathainvestments.com
+- **Phone**: +977-9876543211
 
 ---
 
-**Built with ❤️ for the Nepalese stock market community** 🇳🇵
+**Built with ❤️ for Nepal's Investment Community** 🏔️
+
+*This platform demonstrates modern web development practices with real-time data visualization, comprehensive analytics, and production-ready deployment.*

@@ -1,265 +1,206 @@
-# 🐙 GitHub Repository Setup Guide
+# 🚀 GitHub Setup Guide for Sagarmatha Investments
 
-## Step 1: Create GitHub Repository
+## 📋 Steps to Push to GitHub
 
-1. Go to [github.com](https://github.com)
-2. Click **"New repository"**
-3. **Repository name**: `sagarmatha-investments`
-4. **Description**: `NEPSE Market Analytics Application with Django Backend and Next.js Frontend`
-5. **Visibility**: Public (or Private if you prefer)
-6. **Initialize**: Don't initialize with README (we already have one)
-7. Click **"Create repository"**
+### 1. Create GitHub Repository
+1. Go to [GitHub.com](https://github.com)
+2. Click "New repository"
+3. Repository name: `sagarmatha-investments`
+4. Description: `Sagarmatha Investments - NEPSE Stock Market Analytics Platform`
+5. Set to **Public** (for portfolio showcase)
+6. **Don't** initialize with README, .gitignore, or license (we already have these)
+7. Click "Create repository"
 
-## Step 2: Push Your Code to GitHub
+### 2. Update Remote URL
+Replace `yourusername` with your actual GitHub username:
 
 ```bash
-# Add remote origin (replace with your GitHub username)
-git remote add origin https://github.com/YOUR-USERNAME/sagarmatha-investments.git
+# Remove the placeholder remote
+git remote remove origin
+
+# Add your actual GitHub repository
+git remote add origin https://github.com/YOURUSERNAME/sagarmatha-investments.git
 
 # Push to GitHub
-git branch -M main
-git push -u origin main
+git push -u origin master
 ```
 
-## Step 3: Verify Repository
-
-1. Go to your GitHub repository
-2. Verify all files are uploaded:
-   - `django-backend/` - Django REST API
-   - `nextjs-app/` - Next.js frontend
-   - `README.md` - Project documentation
-   - `SUPABASE_DATABASE_SCHEMA.sql` - Database schema
-   - `COMPLETE_DEPLOYMENT_GUIDE.md` - Deployment instructions
-
-## Step 4: Set Up Branch Protection (Optional)
-
-1. Go to **Settings** → **Branches**
-2. Add rule for `main` branch
-3. Require pull request reviews
-4. Require status checks
-
-## Step 5: Configure GitHub Actions (Optional)
-
-Create `.github/workflows/ci.yml`:
-
-```yaml
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  test-backend:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.10
-    - name: Install dependencies
-      run: |
-        cd django-backend
-        pip install -r requirements-minimal.txt
-    - name: Run tests
-      run: |
-        cd django-backend
-        python manage.py test
-
-  test-frontend:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
-    - name: Install dependencies
-      run: |
-        cd nextjs-app
-        npm install
-    - name: Run tests
-      run: |
-        cd nextjs-app
-        npm run build
+### 3. Alternative: Use GitHub CLI (if installed)
+```bash
+# Create repository and push in one command
+gh repo create sagarmatha-investments --public --source=. --remote=origin --push
 ```
 
-## Step 6: Deploy to Production
+## 🏔️ Project Overview
 
-### Backend (PythonAnywhere)
-1. Follow `PYTHONANYWHERE_DEPLOYMENT_STEPS.md`
-2. Clone your GitHub repository
-3. Configure environment variables
-4. Deploy Django backend
+### **Sagarmatha Investments** - Complete NEPSE Analytics Platform
 
-### Frontend (Vercel)
-1. Go to [vercel.com](https://vercel.com)
-2. Import your GitHub repository
-3. Configure build settings:
-   - **Framework Preset**: Next.js
-   - **Root Directory**: `nextjs-app`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `.next`
-4. Add environment variables:
-   - `NEXT_PUBLIC_API_URL`: `https://pratikshyab.pythonanywhere.com/api/v1`
-5. Deploy
+A comprehensive investment platform featuring:
+- **Real-time NEPSE data** with interactive charts
+- **Vercel Analytics** integration for user insights
+- **Django REST API** backend for data management
+- **Next.js frontend** with modern UI/UX
+- **PythonAnywhere deployment** ready
 
-### Database (Supabase)
-1. Follow `SUPABASE_SETUP_INSTRUCTIONS.md`
-2. Run the database schema
-3. Configure connection settings
+## 📊 NEPSE Data Charts Available
 
-## Step 7: Update Documentation
+### 1. **Market Overview Charts**
+- **NEPSE Index Trend** - Line chart showing historical performance
+- **Trading Volume** - Bar chart displaying daily volume
+- **Sector Distribution** - Doughnut chart showing sector breakdown
+- **Market Indices** - Cards showing NEPSE, Sensitive, and Float indices
 
-### Update README.md
-- Add live demo links
-- Update deployment instructions
-- Add screenshots
-- Update API documentation
+### 2. **Interactive Features**
+- **Timeframe Selection** - 7D, 30D, 90D, 1Y views
+- **Real-time Updates** - Auto-refresh every 5 minutes
+- **Responsive Design** - Works on all devices
+- **Error Handling** - Graceful fallbacks for data issues
 
-### Add Contributing Guidelines
-Create `CONTRIBUTING.md`:
+### 3. **Data Tables**
+- **Top Performing Stocks** - Sortable table with key metrics
+- **Stock Details** - Symbol, company, sector, price, change, volume
+- **Performance Metrics** - Color-coded gains/losses
 
-```markdown
-# Contributing to Sagarmatha Investments
+## 🚀 Live Demo Features
 
-## How to Contribute
+### **Frontend (Next.js)**
+- **Homepage**: Professional landing page with services
+- **NEPSE Analytics**: `/charts` - Comprehensive market analysis
+- **Live Data**: `/nepse-live` - Real-time market data
+- **API Documentation**: `/api-docs` - Complete API reference
+- **Responsive Design**: Mobile-first approach
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+### **Backend (Django)**
+- **REST API**: Complete NEPSE data endpoints
+- **Analytics**: Sagarmatha-specific investment tracking
+- **Reports**: Daily/weekly market summaries
+- **Data Management**: Health checks and updates
 
-## Development Setup
-
-1. Clone the repository
-2. Set up backend (Django)
-3. Set up frontend (Next.js)
-4. Configure database (Supabase)
-5. Run tests
-
-## Code Style
-
-- Follow PEP 8 for Python
-- Use TypeScript for frontend
-- Write tests for new features
-- Update documentation
-```
-
-## Step 8: Set Up Issues and Projects
-
-### Create Issue Templates
-Create `.github/ISSUE_TEMPLATE/bug_report.md`:
-
-```markdown
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: bug
-assignees: ''
----
-
-**Describe the bug**
-A clear description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior.
-
-**Expected behavior**
-What you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots.
-
-**Environment**
-- OS: [e.g. Windows, macOS, Linux]
-- Browser: [e.g. Chrome, Firefox, Safari]
-- Version: [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
-```
-
-## Step 9: Add License
-
-Create `LICENSE`:
-
-```text
-MIT License
-
-Copyright (c) 2024 Sagarmatha Investments
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
-## Step 10: Final Repository Structure
-
-Your GitHub repository should have:
+## 📁 Repository Structure
 
 ```
 sagarmatha-investments/
-├── .github/
-│   ├── workflows/
-│   │   └── ci.yml
-│   └── ISSUE_TEMPLATE/
-│       └── bug_report.md
-├── django-backend/
-│   ├── nepse/
-│   ├── sagarmatha_backend/
-│   ├── requirements.txt
-│   └── manage.py
-├── nextjs-app/
+├── nextjs-app/                 # Next.js frontend
 │   ├── src/
-│   ├── package.json
-│   └── next.config.ts
-├── .gitignore
-├── README.md
-├── LICENSE
-├── CONTRIBUTING.md
-├── SUPABASE_DATABASE_SCHEMA.sql
-├── COMPLETE_DEPLOYMENT_GUIDE.md
-├── PYTHONANYWHERE_DEPLOYMENT_STEPS.md
-└── SUPABASE_SETUP_INSTRUCTIONS.md
+│   │   ├── app/                # App router pages
+│   │   ├── components/         # React components
+│   │   ├── lib/               # Utilities and analytics
+│   │   └── hooks/             # Custom React hooks
+│   ├── public/                # Static assets
+│   └── package.json           # Dependencies
+├── django-backend/            # Django API backend
+│   ├── sagarmatha_backend/    # Django project
+│   ├── nepse/                 # NEPSE data app
+│   └── requirements.txt       # Python dependencies
+├── docs/                      # Documentation
+└── README.md                  # Project overview
 ```
 
-## 🎉 Success!
+## 🎯 Key Features
 
-Your GitHub repository is now set up with:
-- ✅ Complete NEPSE application code
-- ✅ Comprehensive documentation
-- ✅ Deployment guides
-- ✅ CI/CD pipeline (optional)
-- ✅ Issue templates
-- ✅ Contributing guidelines
-- ✅ MIT License
+### **Analytics Integration**
+- ✅ **Vercel Analytics** - Privacy-focused user tracking
+- ✅ **Vercel Speed Insights** - Performance monitoring
+- ✅ **Google Analytics** - Detailed behavior analysis
+- ✅ **Custom Tracking** - NEPSE-specific metrics
 
-## 🔗 Next Steps
+### **NEPSE Data Visualization**
+- ✅ **Line Charts** - Historical price trends
+- ✅ **Bar Charts** - Trading volume analysis
+- ✅ **Doughnut Charts** - Sector distribution
+- ✅ **Data Tables** - Stock performance metrics
+- ✅ **Real-time Updates** - Live market data
 
-1. **Deploy Backend**: Follow `PYTHONANYWHERE_DEPLOYMENT_STEPS.md`
-2. **Deploy Frontend**: Deploy to Vercel
-3. **Set Up Database**: Follow `SUPABASE_SETUP_INSTRUCTIONS.md`
-4. **Test Everything**: Verify all features work
-5. **Go Live**: Share your NEPSE application! 🚀
+### **Deployment Ready**
+- ✅ **Vercel Frontend** - Automatic deployments
+- ✅ **PythonAnywhere Backend** - Production-ready API
+- ✅ **Environment Configuration** - Secure settings
+- ✅ **CI/CD Pipeline** - Automated workflows
 
-Your complete NEPSE application is now on GitHub and ready for deployment! 🎉
+## 🔧 Local Development
+
+### **Frontend Setup**
+```bash
+cd nextjs-app
+npm install
+npm run dev
+# Visit http://localhost:3000
+```
+
+### **Backend Setup**
+```bash
+cd django-backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py runserver
+# API available at http://localhost:8000
+```
+
+## 📊 NEPSE Charts Demo
+
+### **Available Chart Types**
+1. **NEPSE Index Trend** - Historical performance line chart
+2. **Trading Volume** - Daily volume bar chart
+3. **Sector Distribution** - Market sector breakdown
+4. **Top Stocks Table** - Performance metrics table
+5. **Market Indices Cards** - Key index displays
+
+### **Interactive Features**
+- **Timeframe Selection** - Multiple time periods
+- **Auto-refresh** - Real-time data updates
+- **Responsive Design** - Mobile and desktop optimized
+- **Error Handling** - Graceful data loading states
+
+## 🚀 Deployment
+
+### **Frontend (Vercel)**
+1. Connect GitHub repository to Vercel
+2. Automatic deployments on push
+3. Environment variables configured
+4. Analytics enabled
+
+### **Backend (PythonAnywhere)**
+1. Upload django-backend folder
+2. Configure virtual environment
+3. Set up MySQL database
+4. Configure WSGI settings
+
+## 📈 Analytics Dashboard
+
+### **User Insights**
+- Page views and user behavior
+- NEPSE data interaction patterns
+- Investment action tracking
+- Performance metrics
+
+### **Technical Metrics**
+- Core Web Vitals monitoring
+- API response times
+- Error tracking and debugging
+- Real user monitoring
+
+## 🎯 Portfolio Showcase
+
+This repository demonstrates:
+- **Full-stack Development** - Next.js + Django
+- **Real-time Data** - NEPSE market integration
+- **Modern UI/UX** - Responsive design
+- **Analytics Integration** - Comprehensive tracking
+- **Production Deployment** - Vercel + PythonAnywhere
+- **API Development** - RESTful endpoints
+- **Data Visualization** - Interactive charts
+
+## 📞 Support
+
+For questions or issues:
+- Check the documentation in each folder
+- Review the setup guides
+- Test locally before deployment
+- Monitor analytics dashboards
+
+---
+
+**Your Sagarmatha Investments platform is ready for GitHub! 🏔️**
+
+The repository showcases a complete investment analytics platform with real-time NEPSE data, interactive charts, and comprehensive analytics tracking.
