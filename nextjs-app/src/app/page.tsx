@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { apiClient, NEPSEIndexData, NEPSEStockData, NEPSEIndicesData } from '@/lib/api';
 import CandlestickChart from '@/components/charts/CandlestickChart';
 import StockCard from '@/components/ui/StockCard';
@@ -166,6 +167,100 @@ export default function HomePage() {
             </div>
           </div>
         )}
+
+        {/* NEPSE Data Analytics Showcase */}
+        <div className="mb-16 bg-white rounded-lg shadow-lg p-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Complete NEPSE Data Analytics
+            </h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              Comprehensive market analysis with all chart types, real-time data, historical trends, 
+              and detailed insights into Nepal's stock market performance.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Live Data */}
+            <Link href="/nepse-live" className="group">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <div className="text-center">
+                  <div className="text-4xl mb-4">⚡</div>
+                  <h3 className="text-xl font-semibold mb-2 text-blue-800">Live Market Data</h3>
+                  <p className="text-gray-600 mb-4">
+                    Real-time NEPSE market data with live updates, auto-refresh, and current market statistics.
+                  </p>
+                  <div className="text-sm text-blue-600 group-hover:text-blue-800">
+                    View Live Data →
+                  </div>
+                </div>
+              </div>
+            </Link>
+            
+            {/* Comprehensive Analytics */}
+            <Link href="/charts" className="group">
+              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <div className="text-center">
+                  <div className="text-4xl mb-4">📊</div>
+                  <h3 className="text-xl font-semibold mb-2 text-green-800">Market Analytics</h3>
+                  <p className="text-gray-600 mb-4">
+                    Interactive charts, historical data, sector analysis, and performance metrics.
+                  </p>
+                  <div className="text-sm text-green-600 group-hover:text-green-800">
+                    View Analytics →
+                  </div>
+                </div>
+              </div>
+            </Link>
+            
+            {/* Complete Data */}
+            <Link href="/nepse-data" className="group">
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <div className="text-center">
+                  <div className="text-4xl mb-4">🏔️</div>
+                  <h3 className="text-xl font-semibold mb-2 text-purple-800">Complete NEPSE Data</h3>
+                  <p className="text-gray-600 mb-4">
+                    All chart types, live data, historical trends, and comprehensive market insights.
+                  </p>
+                  <div className="text-sm text-purple-600 group-hover:text-purple-800">
+                    View All Data →
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+          
+          {/* Chart Types Overview */}
+          <div className="mt-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Available Chart Types</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl mb-2">📈</div>
+                <div className="text-sm font-medium">Line Charts</div>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl mb-2">📊</div>
+                <div className="text-sm font-medium">Bar Charts</div>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl mb-2">🥧</div>
+                <div className="text-sm font-medium">Doughnut</div>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl mb-2">🍰</div>
+                <div className="text-sm font-medium">Pie Charts</div>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl mb-2">🔍</div>
+                <div className="text-sm font-medium">Scatter</div>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl mb-2">📋</div>
+                <div className="text-sm font-medium">Data Tables</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );

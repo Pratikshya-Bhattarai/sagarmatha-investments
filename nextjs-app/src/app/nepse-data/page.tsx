@@ -1,164 +1,212 @@
+import React from 'react';
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
+import NEPSEComprehensiveDashboard from "@/components/charts/nepse-comprehensive-dashboard";
+import NEPSELiveDashboard from "@/components/charts/nepse-live-dashboard";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
+
 export default function NEPSEDataPage() {
   return (
-    <html>
-      <head>
-        <title>NEPSE Live Data - Sagarmatha Investments</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
-      <body style={{ margin: 0, padding: 0, fontFamily: 'Arial, sans-serif', backgroundColor: '#f8fafc' }}>
-        <div style={{ minHeight: '100vh', padding: '20px' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            {/* Header */}
-            <header style={{ backgroundColor: 'white', padding: '20px', marginBottom: '20px', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-              <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1e293b', margin: 0 }}>Sagarmatha Investments</h1>
-            </header>
-
-            {/* Hero Section */}
-            <section style={{ background: 'linear-gradient(135deg, #059669, #2563eb)', color: 'white', padding: '40px', borderRadius: '8px', marginBottom: '20px', textAlign: 'center' }}>
-              <h1 style={{ fontSize: '48px', fontWeight: 'bold', margin: '0 0 16px 0' }}>NEPSE Live Data</h1>
-              <p style={{ fontSize: '20px', margin: '0 0 20px 0', opacity: 0.9 }}>Real-time Nepal Stock Exchange market data</p>
-              <div style={{ display: 'inline-block', backgroundColor: '#10b981', color: 'white', padding: '8px 16px', borderRadius: '20px', fontSize: '14px', fontWeight: '500' }}>
-                ✅ Live Data Available
-              </div>
-            </section>
-
-            {/* Market Indices */}
-            <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '8px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1e293b', marginBottom: '24px' }}>Market Indices</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-                <div style={{ background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)', padding: '24px', borderRadius: '8px', flex: '1', minWidth: '300px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1e293b', margin: 0 }}>NEPSE Index</h3>
-                    <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '4px 12px', borderRadius: '20px', fontSize: '14px', fontWeight: '500' }}>
-                      +0.54%
-                    </span>
-                  </div>
-                  <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#1e293b', marginBottom: '8px' }}>2,847.23</div>
-                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#059669' }}>+15.40</div>
-                  <div style={{ fontSize: '14px', color: '#64748b', marginTop: '8px' }}>
-                    52W High: 3,200.50 | Low: 2,400.25
-                  </div>
-                </div>
-
-                <div style={{ background: 'linear-gradient(135deg, #dcfce7, #bbf7d0)', padding: '24px', borderRadius: '8px', flex: '1', minWidth: '300px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1e293b', margin: 0 }}>Sensitive Index</h3>
-                    <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '4px 12px', borderRadius: '20px', fontSize: '14px', fontWeight: '500' }}>
-                      +1.47%
-                    </span>
-                  </div>
-                  <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#1e293b', marginBottom: '8px' }}>567.89</div>
-                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#059669' }}>+8.25</div>
-                  <div style={{ fontSize: '14px', color: '#64748b', marginTop: '8px' }}>
-                    52W High: 600.00 | Low: 480.50
-                  </div>
-                </div>
-
-                <div style={{ background: 'linear-gradient(135deg, #f3e8ff, #e9d5ff)', padding: '24px', borderRadius: '8px', flex: '1', minWidth: '300px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1e293b', margin: 0 }}>Float Index</h3>
-                    <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '4px 12px', borderRadius: '20px', fontSize: '14px', fontWeight: '500' }}>
-                      +1.09%
-                    </span>
-                  </div>
-                  <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#1e293b', marginBottom: '8px' }}>198.45</div>
-                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#059669' }}>+2.15</div>
-                  <div style={{ fontSize: '14px', color: '#64748b', marginTop: '8px' }}>
-                    52W High: 220.00 | Low: 180.00
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Top Stocks */}
-            <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '8px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1e293b', marginBottom: '24px' }}>Top Performing Stocks</h2>
-              <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
-                      <th style={{ textAlign: 'left', padding: '16px 8px', fontWeight: '600', color: '#1e293b' }}>Symbol</th>
-                      <th style={{ textAlign: 'left', padding: '16px 8px', fontWeight: '600', color: '#1e293b' }}>Company</th>
-                      <th style={{ textAlign: 'right', padding: '16px 8px', fontWeight: '600', color: '#1e293b' }}>Price</th>
-                      <th style={{ textAlign: 'right', padding: '16px 8px', fontWeight: '600', color: '#1e293b' }}>Change</th>
-                      <th style={{ textAlign: 'right', padding: '16px 8px', fontWeight: '600', color: '#1e293b' }}>Volume</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '16px 8px', fontWeight: 'bold', color: '#1e293b', fontSize: '18px' }}>NICL</td>
-                      <td style={{ padding: '16px 8px', color: '#64748b' }}>Nepal Investment Bank Limited</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#1e293b' }}>Rs. 450.50</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#059669' }}>+2.8%</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', color: '#64748b' }}>150,000</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '16px 8px', fontWeight: 'bold', color: '#1e293b', fontSize: '18px' }}>NABIL</td>
-                      <td style={{ padding: '16px 8px', color: '#64748b' }}>Nabil Bank Limited</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#1e293b' }}>Rs. 520.75</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#dc2626' }}>-1.6%</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', color: '#64748b' }}>120,000</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '16px 8px', fontWeight: 'bold', color: '#1e293b', fontSize: '18px' }}>SCB</td>
-                      <td style={{ padding: '16px 8px', color: '#64748b' }}>Standard Chartered Bank Nepal Limited</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#1e293b' }}>Rs. 380.25</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#059669' }}>+1.5%</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', color: '#64748b' }}>95,000</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '16px 8px', fontWeight: 'bold', color: '#1e293b', fontSize: '18px' }}>HBL</td>
-                      <td style={{ padding: '16px 8px', color: '#64748b' }}>Himalayan Bank Limited</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#1e293b' }}>Rs. 320.80</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#dc2626' }}>-0.99%</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', color: '#64748b' }}>85,000</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '16px 8px', fontWeight: 'bold', color: '#1e293b', fontSize: '18px' }}>GBIME</td>
-                      <td style={{ padding: '16px 8px', color: '#64748b' }}>Global IME Bank Limited</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#1e293b' }}>Rs. 280.45</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', fontWeight: 'bold', color: '#059669' }}>+2.88%</td>
-                      <td style={{ padding: '16px 8px', textAlign: 'right', color: '#64748b' }}>110,000</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Market Summary */}
-            <div style={{ background: 'linear-gradient(90deg, #dcfce7, #dbeafe)', border: '1px solid #bbf7d0', padding: '24px', borderRadius: '8px', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#1e293b', marginBottom: '16px' }}>Market Summary</h3>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-                <div style={{ textAlign: 'center', flex: '1', minWidth: '150px' }}>
-                  <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#059669' }}>+0.54%</div>
-                  <div style={{ fontSize: '14px', color: '#64748b' }}>NEPSE Index</div>
-                </div>
-                <div style={{ textAlign: 'center', flex: '1', minWidth: '150px' }}>
-                  <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2563eb' }}>5</div>
-                  <div style={{ fontSize: '14px', color: '#64748b' }}>Active Stocks</div>
-                </div>
-                <div style={{ textAlign: 'center', flex: '1', minWidth: '150px' }}>
-                  <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#7c3aed' }}>Rs. 1.95B</div>
-                  <div style={{ fontSize: '14px', color: '#64748b' }}>Total Turnover</div>
-                </div>
-                <div style={{ textAlign: 'center', flex: '1', minWidth: '150px' }}>
-                  <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ea580c' }}>560K</div>
-                  <div style={{ fontSize: '14px', color: '#64748b' }}>Total Volume</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <footer style={{ backgroundColor: '#1e293b', color: 'white', padding: '48px', borderRadius: '8px', textAlign: 'center' }}>
-              <h3 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Sagarmatha Investments</h3>
-              <p style={{ color: '#94a3b8', marginBottom: '16px' }}>Your trusted partner in financial growth</p>
-              <p style={{ fontSize: '14px', color: '#64748b' }}>
-                Data updated: {new Date().toLocaleString()}
-              </p>
-            </footer>
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      
+      <main className="pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center mb-12">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">
+              Complete NEPSE Data Analytics
+            </h1>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              Comprehensive NEPSE market analysis with all chart types, real-time data, historical trends, 
+              sector analysis, and detailed stock performance metrics for Nepal's stock market.
+            </p>
           </div>
         </div>
-      </body>
-    </html>
-  )
+        
+        {/* Live Data Section */}
+        <div className="mb-16">
+          <div className="container mx-auto px-4 mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Live Market Data</h2>
+            <p className="text-lg text-gray-600">
+              Real-time NEPSE market data with live updates, auto-refresh, and current market statistics.
+            </p>
+          </div>
+          <NEPSELiveDashboard />
+        </div>
+        
+        {/* Comprehensive Analytics Section */}
+        <div className="mb-16">
+          <div className="container mx-auto px-4 mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Comprehensive Analytics</h2>
+            <p className="text-lg text-gray-600">
+              Detailed market analysis with multiple chart types, historical data, sector distribution, 
+              and performance metrics for in-depth market insights.
+            </p>
+          </div>
+          <NEPSEComprehensiveDashboard />
+        </div>
+        
+        {/* Chart Types Overview */}
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Available Chart Types</h2>
+            <p className="text-lg text-gray-600">
+              Our NEPSE analytics platform includes multiple chart types for comprehensive market analysis.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Line Charts */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="text-center">
+                <div className="text-4xl mb-4">📈</div>
+                <h3 className="text-xl font-semibold mb-2">Line Charts</h3>
+                <p className="text-gray-600 mb-4">
+                  NEPSE index trends, price movements, and historical performance over time.
+                </p>
+                <ul className="text-sm text-gray-500 text-left">
+                  <li>• NEPSE Index Trend</li>
+                  <li>• Price Movement Analysis</li>
+                  <li>• Historical Performance</li>
+                  <li>• Multi-timeframe Views</li>
+                </ul>
+              </div>
+            </div>
+            
+            {/* Bar Charts */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="text-center">
+                <div className="text-4xl mb-4">📊</div>
+                <h3 className="text-xl font-semibold mb-2">Bar Charts</h3>
+                <p className="text-gray-600 mb-4">
+                  Trading volume, turnover analysis, and performance distribution metrics.
+                </p>
+                <ul className="text-sm text-gray-500 text-left">
+                  <li>• Trading Volume</li>
+                  <li>• Turnover Analysis</li>
+                  <li>• Performance Distribution</li>
+                  <li>• Sector Performance</li>
+                </ul>
+              </div>
+            </div>
+            
+            {/* Doughnut Charts */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="text-center">
+                <div className="text-4xl mb-4">🥧</div>
+                <h3 className="text-xl font-semibold mb-2">Doughnut Charts</h3>
+                <p className="text-gray-600 mb-4">
+                  Sector distribution, market cap breakdown, and portfolio composition.
+                </p>
+                <ul className="text-sm text-gray-500 text-left">
+                  <li>• Sector Distribution</li>
+                  <li>• Market Cap Analysis</li>
+                  <li>• Portfolio Composition</li>
+                  <li>• Market Share</li>
+                </ul>
+              </div>
+            </div>
+            
+            {/* Scatter Charts */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="text-center">
+                <div className="text-4xl mb-4">🔍</div>
+                <h3 className="text-xl font-semibold mb-2">Scatter Charts</h3>
+                <p className="text-gray-600 mb-4">
+                  Price vs volume analysis, correlation studies, and market relationships.
+                </p>
+                <ul className="text-sm text-gray-500 text-left">
+                  <li>• Price vs Volume</li>
+                  <li>• Correlation Analysis</li>
+                  <li>• Market Relationships</li>
+                  <li>• Risk Assessment</li>
+                </ul>
+              </div>
+            </div>
+            
+            {/* Pie Charts */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="text-center">
+                <div className="text-4xl mb-4">🍰</div>
+                <h3 className="text-xl font-semibold mb-2">Pie Charts</h3>
+                <p className="text-gray-600 mb-4">
+                  Market cap distribution, company size analysis, and market segmentation.
+                </p>
+                <ul className="text-sm text-gray-500 text-left">
+                  <li>• Market Cap Distribution</li>
+                  <li>• Company Size Analysis</li>
+                  <li>• Market Segmentation</li>
+                  <li>• Investment Categories</li>
+                </ul>
+              </div>
+            </div>
+            
+            {/* Data Tables */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="text-center">
+                <div className="text-4xl mb-4">📋</div>
+                <h3 className="text-xl font-semibold mb-2">Data Tables</h3>
+                <p className="text-gray-600 mb-4">
+                  Sortable stock listings, performance metrics, and detailed company information.
+                </p>
+                <ul className="text-sm text-gray-500 text-left">
+                  <li>• Top Performers</li>
+                  <li>• Stock Rankings</li>
+                  <li>• Performance Metrics</li>
+                  <li>• Company Details</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Features Overview */}
+        <div className="container mx-auto px-4 py-16 bg-white">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Platform Features</h2>
+            <p className="text-lg text-gray-600">
+              Advanced features for comprehensive NEPSE market analysis and investment insights.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-4xl mb-4">⚡</div>
+              <h3 className="text-xl font-semibold mb-2">Real-time Data</h3>
+              <p className="text-gray-600">
+                Live market updates with auto-refresh every 2-5 minutes for current market conditions.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl mb-4">📱</div>
+              <h3 className="text-xl font-semibold mb-2">Responsive Design</h3>
+              <p className="text-gray-600">
+                Mobile-optimized charts and tables that work perfectly on all devices and screen sizes.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl mb-4">🔄</div>
+              <h3 className="text-xl font-semibold mb-2">Interactive Charts</h3>
+              <p className="text-gray-600">
+                Zoom, pan, and interact with charts for detailed analysis and custom timeframes.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl mb-4">📊</div>
+              <h3 className="text-xl font-semibold mb-2">Multiple Timeframes</h3>
+              <p className="text-gray-600">
+                Analyze data across different time periods: 7D, 30D, 90D, and 1Y for comprehensive insights.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <Footer />
+      <ScrollToTop />
+    </div>
+  );
 }

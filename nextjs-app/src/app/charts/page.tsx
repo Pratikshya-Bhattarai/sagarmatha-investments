@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import NEPSEChartsSection from "@/components/sections/nepse-charts-section";
+import NEPSEComprehensiveDashboard from "@/components/charts/nepse-comprehensive-dashboard";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 
 export default function ChartsPage() {
@@ -21,7 +21,7 @@ export default function ChartsPage() {
           </div>
         </div>
         
-        <NEPSEChartsSection />
+        <NEPSEComprehensiveDashboard />
       </main>
       
       <Footer />
